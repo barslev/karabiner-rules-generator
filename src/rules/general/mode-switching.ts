@@ -40,6 +40,6 @@ const rules = [
   ]),
 ];
 
-export const isVimModeEnabled = ifVar(VIM_MODE_VARIABLE, VIM_MODE);
+export const ifVimModeEnabled = ifVar(VIM_MODE_VARIABLE, VIM_MODE);
 
 export default rules;

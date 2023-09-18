@@ -1,11 +1,11 @@
-import { isVimModeEnabled } from '../general/general';
+import { ifVimModeEnabled } from '../general/mode-switching';
 import { intelliJShortcuts } from '../../shortcuts/apps/intelliJ';
 import { ifApp, map, rule } from 'karabiner.ts';
 
 const rules = [
   rule(
     'intelliJ navigation',
-    isVimModeEnabled,
+    ifVimModeEnabled,
     ifApp('com.jetbrains.intellij'),
   ).manipulators([
     map(...intelliJShortcuts.BACK.from).to(...intelliJShortcuts.BACK.to),
