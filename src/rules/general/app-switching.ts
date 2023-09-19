@@ -1,5 +1,5 @@
 import { ifVimModeEnabled } from './mode-switching';
-import { rule, to$ } from 'karabiner.ts';
+import { rule } from 'karabiner.ts';
 import {
   appSwitchingShortcuts,
   AppSwitchingShortcutsKeys,
@@ -71,9 +71,8 @@ const configsForApps: Record<
 };
 function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
   const config = configsForApps[appSwitchingKey];
-  return twoClickSequence(
-    ...appSwitchingShortcuts[appSwitchingKey],
-    to$(
+  return twoClickSequence(...appSwitchingShortcuts[appSwitchingKey], (x) =>
+    x.to$(
       `open -${appSwitchingKey.startsWith('INTELLI') ? 'n' : ''}a '${
         config.app
       }' ${!config.args ? '' : `--args ${config.args}`}`,
