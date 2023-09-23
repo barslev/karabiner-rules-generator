@@ -24,10 +24,13 @@ const rules = [
   rule('Switch to vim mode', ifVar(VIM_MODE_VARIABLE, NO_MODE)).manipulators([
     map(...VimModeShortcuts.SWITCH_FROM_NORMAL_MODE_TO_VIM_MODE)
       .toIfAlone(setVimModeWithHalt)
-      .toIfHeldDown(setModeToVimToEvent)
+      .toIfHeldDown(toSetVar(VIM_MODE_VARIABLE, VIM_MODE))
       .to(setModeToVimNotificationToEvent)
       .toAfterKeyUp(toSetVar(VIM_MODE_VARIABLE, NO_MODE))
-      .toAfterKeyUp(toNotificationMessage(vimNotificationKey, '')),
+      .toAfterKeyUp(toNotificationMessage(vimNotificationKey, ''))
+      .parameters({
+        'basic.to_if_held_down_threshold_milliseconds': 50,
+      }),
   ]),
   rule(
     'Switch mode from vim_mode',
@@ -49,6 +52,14 @@ const rules = [
     setModeToNoMode(
       map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_NEW_LINE_BELOW)
         .to('right_arrow', ['left_command'])
+        .to('return_or_enter'),
+    ),
+    setModeToNoMode(
+      map(
+        ...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_COMMA_AT_END_LINE_AND_NEW_LINE_BELOW,
+      )
+        .to('right_arrow', ['left_command'])
+        .to('comma')
         .to('return_or_enter'),
     ),
     setModeToNoMode(

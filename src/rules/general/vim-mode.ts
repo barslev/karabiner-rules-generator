@@ -1,5 +1,5 @@
-import { ifVimModeEnabled } from './mode-switching';
-import { map, rule } from 'karabiner.ts';
+import { ifVimModeEnabled, setModeToNoMode } from './mode-switching';
+import { FromAndToKeyCode, map, rule } from 'karabiner.ts';
 import {
   secondKeyPressedWhileFirstHeldDown,
   twoClickSequence,
@@ -7,6 +7,8 @@ import {
 
 const rules = [
   rule('deletion rules', ifVimModeEnabled).manipulators([
+    map('h').to('delete_forward'),
+    map('h', ['left_command']).to('delete_or_backspace'),
     ...secondKeyPressedWhileFirstHeldDown('d', 'f', (x) => {
       return x
         .to('right_arrow', ['left_shift', 'left_option'])
@@ -55,6 +57,7 @@ const rules = [
         .to('left_arrow', ['left_shift', 'left_command'])
         .to('c', ['left_command']),
     ),
+    map('c').to('c', ['left_command']),
   ]),
   rule('cutting rules', ifVimModeEnabled).manipulators([
     ...twoClickSequence('c', 'l', (x) =>
@@ -85,8 +88,6 @@ const rules = [
     ),
   ]),
   rule('pasting and undoing/redoing', ifVimModeEnabled).manipulators([
-    map('h').to('delete_forward'),
-    map('h', ['left_command']).to('delete_or_backspace'),
     map('p').to('v', ['left_command']),
     map('u').to('z', ['left_command']),
     map('u', ['left_command']).to('z', ['left_shift', 'left_command']),
@@ -110,6 +111,16 @@ const rules = [
     map('f', ['left_option']).to('right_arrow', ['left_command']),
     map('s', ['right_option']).to('left_arrow', ['fn', 'left_command']),
     map('f', ['right_option']).to('right_arrow', ['fn', 'left_command']),
+  ]),
+  rule('normal command key combinations', ifVimModeEnabled).manipulators([
+    ...(['v', 'z'] as FromAndToKeyCode[]).map((key) =>
+      map(key, 'left_command').to(key, 'left_command'),
+    ),
+    ...(['f', 'i', 'r'] as FromAndToKeyCode[]).map((key) =>
+      setModeToNoMode(map(key, 'left_command').to(key, 'left_command')),
+    ),
+    map('grave_accent_and_tilde').to('escape'),
+    map('slash').to('return_or_enter'),
   ]),
 ];
 
