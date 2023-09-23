@@ -1,4 +1,4 @@
-import { FromKeyCode, ModifierParam, ToKeyParam } from 'karabiner.ts';
+import { Shortcuts } from '../shortcut-helpers';
 
 type ShortcutsKeys =
   | 'BACK'
@@ -19,14 +19,8 @@ type ShortcutsKeys =
   | 'OPEN_CLIPBOARD_URL_IN_NEW_TAB'
   | 'SEARCH_WEBPAGE'
   | 'RELOAD_WEBPAGE';
-type ShortcutsType = Record<
-  ShortcutsKeys,
-  {
-    from: [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined];
-    to: [ToKeyParam, ModifierParam | undefined];
-  }
->;
-export const chromeShortcuts: ShortcutsType = {
+
+export const chromeShortcuts: Shortcuts<ShortcutsKeys> = {
   BACK: {
     from: ['j', undefined, undefined],
     to: ['left_arrow', { left: '⌘' }],

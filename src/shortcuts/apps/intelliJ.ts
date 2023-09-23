@@ -1,4 +1,4 @@
-import { FromKeyCode, ModifierParam, ToKeyParam } from 'karabiner.ts';
+import { Shortcuts } from '../shortcut-helpers';
 
 type IntelliJShortcutsKeys =
   | 'BACK'
@@ -44,20 +44,7 @@ type IntelliJShortcutsKeys =
   | 'NEXT_CHANGE'
   | 'PREVIOUS_CHANGE';
 
-type IntelliJShortcutsType = Record<
-  IntelliJShortcutsKeys,
-  {
-    from:
-      | [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined]
-      | string;
-    to: [ToKeyParam, ModifierParam | undefined];
-    options?: {
-      disableVimMode: boolean;
-      returnToVimOnEnter: boolean;
-    };
-  }
->;
-export const intelliJShortcuts: IntelliJShortcutsType = {
+export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   BACK: {
     from: ['n', undefined, undefined],
     to: ['left_arrow', { left: '⌘⌥' }],
