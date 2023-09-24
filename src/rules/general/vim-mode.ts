@@ -27,7 +27,7 @@ clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 'g', (x) => {
 });
 
 // Copying rules
-clickHelper.registerTwoClickSequence('y', 'l', (x) =>
+clickHelper.registerTwoClickSequence('y', 'y', (x) =>
   x
     .to('left_arrow', ['left_command'])
     .to('right_arrow', ['left_command', 'left_shift'])
