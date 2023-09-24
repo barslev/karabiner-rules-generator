@@ -24,7 +24,7 @@ export type AppSwitchingShortcutsKeys =
 // addSecondClick2(APPLICATION_SWITCHER_KEY, 'f', { shell_command: "open /Users/benjaminbarslevnielsen/Documents/git/jsfixinc"}, vimModeOptions, undefined, getToKeyPress(['w', 'left_command'])),
 // addSecondClick2(APPLICATION_SWITCHER_KEY, 'x', { shell_command: "open -a 'Google Chrome.app'"}, vimModeOptions, [getToKeyPress(chromeShortcuts.NEW_WINDOW), getToKeyPress(['v', 'left_command']), getToKeyPress(['return_or_enter'])]),
 // addSecondClick2(APPLICATION_SWITCHER_KEY, 'm', [getToKeyPress(['c', 'left_command']), { shell_command: "open -na 'IntelliJ IDEA.app' --args /Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-package-manager-2"}], vimModeOptions, undefined, [getToKeyPress(['f', 'left_command']), getToKeyPress(['v', 'left_command'])]),
-// addSecondClick2(APPLICATION_SWITCHER_KEY, APPLICATION_SWITCHER_KEY, getToKeyPress(["tab", "left_command"]), vimModeOptions),
+
 export const appSwitchingShortcuts: Record<
   AppSwitchingShortcutsKeys,
   [FromKeyParam, FromKeyParam]

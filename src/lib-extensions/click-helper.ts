@@ -10,7 +10,7 @@ import {
 import { ShortcutDescriptor, Shortcuts } from '../shortcuts/shortcut-helpers';
 import { setModeToNoMode } from '../rules/general/mode-switching';
 
-type ManipulatorBuilder = ReturnType<typeof map>;
+export type ManipulatorBuilder = ReturnType<typeof map>;
 
 export class ClickHelper {
   private readonly secondKeyManipulators: ManipulatorBuilder[] = [];
@@ -70,9 +70,16 @@ export class ClickHelper {
 
   setupBasic(
     from: [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined],
-    to: [ToKeyParam, ModifierParam | undefined],
+    to:
+      | [ToKeyParam, ModifierParam | undefined]
+      | ((x: ManipulatorBuilder) => ManipulatorBuilder),
   ): void {
-    this.singleKeyManipulators.push(map(...from).toIfAlone(...to));
+    const fromManipulator = map(...from);
+    this.singleKeyManipulators.push(
+      typeof to === 'function'
+        ? to(fromManipulator)
+        : fromManipulator.toIfAlone(...to),
+    );
   }
 
   getManipulators() {
@@ -91,7 +98,10 @@ export class ClickHelper {
           this.setupBasic(shortcut.from, shortcut.to);
         else {
           const toHandler = (x: ManipulatorBuilder) => {
-            let res = x.to(...shortcut.to);
+            let res =
+              typeof shortcut.to === 'function'
+                ? shortcut.to(x)
+                : x.to(...shortcut.to);
             if (shortcut.options?.disableVimMode) res = setModeToNoMode(res);
             if (shortcut.options?.returnToVimOnEnter)
               res.toVar('return_to_vim_on_enter', 1);

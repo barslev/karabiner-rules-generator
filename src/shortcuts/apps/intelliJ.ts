@@ -1,4 +1,6 @@
-import { Shortcuts } from '../shortcut-helpers';
+import { Shortcuts, ToKey } from '../shortcut-helpers';
+import { ManipulatorBuilder } from '../../lib-extensions/click-helper';
+import { toKey } from 'karabiner.ts';
 
 type IntelliJShortcutsKeys =
   | 'BACK'
@@ -42,7 +44,8 @@ type IntelliJShortcutsKeys =
   | 'DECREASE_BLOCK_SELECTION'
   | 'DELETE_LINE'
   | 'NEXT_CHANGE'
-  | 'PREVIOUS_CHANGE';
+  | 'PREVIOUS_CHANGE'
+  | 'RERUN_LAST_TERMINAL_COMMAND';
 
 export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   BACK: {
@@ -216,5 +219,14 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   PREVIOUS_CHANGE: {
     from: ['n', 'left_command', undefined],
     to: ['up_arrow', ['left_control', 'left_shift', 'left_option']],
+  },
+  RERUN_LAST_TERMINAL_COMMAND: {
+    from: 'a,y',
+    to: (x: ManipulatorBuilder) =>
+      x
+        .to(...(intelliJShortcuts.JUMP_TO_TERMINAL.to as ToKey))
+        .to(toKey('up_arrow'))
+        .to(toKey('return_or_enter'))
+        .to(toKey('escape')),
   },
 };
