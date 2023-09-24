@@ -3,8 +3,10 @@ import { rule } from 'karabiner.ts';
 import {
   appSwitchingShortcuts,
   AppSwitchingShortcutsKeys,
+  otherStandardShortcuts,
 } from '../../shortcuts/general/app-switching';
-import { twoClickSequence } from '../../lib-extensions/lib-extensions';
+import { getManipulators } from '../rules-helpers';
+import { ClickHelper } from '../../lib-extensions/click-helper';
 
 const Apps = {
   INTELLIJ: 'IntelliJ IDEA.app',
@@ -69,14 +71,17 @@ const configsForApps: Record<
   TERMINAL: { app: Apps.TERMINAL },
   VSCODE: { app: Apps.VSCODE },
 };
+const clickHelper = new ClickHelper();
 function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
   const config = configsForApps[appSwitchingKey];
-  return twoClickSequence(...appSwitchingShortcuts[appSwitchingKey], (x) =>
-    x.to$(
-      `open -${appSwitchingKey.startsWith('INTELLI') ? 'n' : ''}a '${
-        config.app
-      }' ${!config.args ? '' : `--args ${config.args}`}`,
-    ),
+  return clickHelper.twoClickSequence(
+    ...appSwitchingShortcuts[appSwitchingKey],
+    (x) =>
+      x.to$(
+        `open -${appSwitchingKey.startsWith('INTELLI') ? 'n' : ''}a '${
+          config.app
+        }' ${!config.args ? '' : `--args ${config.args}`}`,
+      ),
   );
 }
 
@@ -85,6 +90,10 @@ const rules = [
     ...(Object.keys(configsForApps) as AppSwitchingShortcutsKeys[]).flatMap(
       (appSwitchingKey) => openApp(appSwitchingKey),
     ),
+  ]),
+  rule('other commands', ifVimModeEnabled).manipulators([
+    ...getManipulators(otherStandardShortcuts, clickHelper),
+    ...clickHelper.getPostProcessManipulators(),
   ]),
 ];
 

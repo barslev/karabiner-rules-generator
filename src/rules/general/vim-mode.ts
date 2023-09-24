@@ -1,58 +1,56 @@
 import { ifVimModeEnabled, setModeToNoMode } from './mode-switching';
 import { FromAndToKeyCode, map, rule } from 'karabiner.ts';
-import {
-  secondKeyPressedWhileFirstHeldDown,
-  twoClickSequence,
-} from '../../lib-extensions/lib-extensions';
+import { ClickHelper } from '../../lib-extensions/click-helper';
 
+const clickHelper = new ClickHelper();
 const rules = [
   rule('deletion rules', ifVimModeEnabled).manipulators([
     map('h').to('delete_forward'),
     map('h', ['left_command']).to('delete_or_backspace'),
-    ...secondKeyPressedWhileFirstHeldDown('d', 'f', (x) => {
-      return x
-        .to('right_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']);
-    }),
-    ...secondKeyPressedWhileFirstHeldDown('d', 's', (x) =>
+    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 's', (x) =>
       x
         .to('left_arrow', ['left_shift', 'left_option'])
         .to('x', ['left_command']),
     ),
-    ...secondKeyPressedWhileFirstHeldDown('d', 'a', (x) => {
+    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 'f', (x) => {
+      return x
+        .to('right_arrow', ['left_shift', 'left_option'])
+        .to('x', ['left_command']);
+    }),
+    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 'a', (x) => {
       return x
         .to('left_arrow', ['left_command', 'left_shift'])
         .to('x', ['left_command']);
     }),
-    ...secondKeyPressedWhileFirstHeldDown('d', 'g', (x) => {
+    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 'g', (x) => {
       return x
         .to('right_arrow', ['left_command', 'left_shift'])
         .to('x', ['left_command']);
     }),
   ]),
   rule('copying rules', ifVimModeEnabled).manipulators([
-    ...twoClickSequence('y', 'l', (x) =>
+    clickHelper.twoClickSequence('y', 'l', (x) =>
       x
         .to('left_arrow', ['left_command'])
         .to('right_arrow', ['left_command', 'left_shift'])
         .to('c', ['left_command']),
     ),
-    ...twoClickSequence('y', 'f', (x) =>
+    clickHelper.twoClickSequence('y', 'f', (x) =>
       x
         .to('right_arrow', ['left_shift', 'left_option'])
         .to('c', ['left_command']),
     ),
-    ...twoClickSequence('y', 's', (x) =>
+    clickHelper.twoClickSequence('y', 's', (x) =>
       x
         .to('left_arrow', ['left_shift', 'left_option'])
         .to('c', ['left_command']),
     ),
-    ...twoClickSequence('y', 'g', (x) =>
+    clickHelper.twoClickSequence('y', 'g', (x) =>
       x
         .to('right_arrow', ['left_shift', 'left_command'])
         .to('c', ['left_command']),
     ),
-    ...twoClickSequence('y', 'a', (x) =>
+    clickHelper.twoClickSequence('y', 'a', (x) =>
       x
         .to('left_arrow', ['left_shift', 'left_command'])
         .to('c', ['left_command']),
@@ -60,28 +58,28 @@ const rules = [
     map('c').to('c', ['left_command']),
   ]),
   rule('cutting rules', ifVimModeEnabled).manipulators([
-    ...twoClickSequence('c', 'l', (x) =>
+    clickHelper.twoClickSequence('c', 'l', (x) =>
       x
         .to('left_arrow', ['left_command'])
         .to('right_arrow', ['left_command', 'left_shift'])
         .to('x', ['left_command']),
     ),
-    ...twoClickSequence('c', 'f', (x) =>
+    clickHelper.twoClickSequence('c', 'f', (x) =>
       x
         .to('right_arrow', ['left_shift', 'left_option'])
         .to('x', ['left_command']),
     ),
-    ...twoClickSequence('c', 's', (x) =>
+    clickHelper.twoClickSequence('c', 's', (x) =>
       x
         .to('left_arrow', ['left_shift', 'left_option'])
         .to('x', ['left_command']),
     ),
-    ...twoClickSequence('c', 'g', (x) =>
+    clickHelper.twoClickSequence('c', 'g', (x) =>
       x
         .to('right_arrow', ['left_shift', 'left_command'])
         .to('x', ['left_command']),
     ),
-    ...twoClickSequence('c', 'a', (x) =>
+    clickHelper.twoClickSequence('c', 'a', (x) =>
       x
         .to('left_arrow', ['left_shift', 'left_command'])
         .to('x', ['left_command']),
@@ -121,6 +119,7 @@ const rules = [
     ),
     map('grave_accent_and_tilde').to('escape'),
     map('slash').to('return_or_enter'),
+    ...clickHelper.getPostProcessManipulators(),
   ]),
 ];
 

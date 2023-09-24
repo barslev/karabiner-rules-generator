@@ -1,4 +1,5 @@
 import { FromKeyParam } from 'karabiner.ts';
+import { Shortcuts } from '../shortcut-helpers';
 
 const APP_SWITCHING_KEY = 'd';
 
@@ -43,4 +44,13 @@ export const appSwitchingShortcuts: Record<
   SLACK: [APP_SWITCHING_KEY, 's'],
   TERMINAL: [APP_SWITCHING_KEY, 't'],
   VSCODE: [APP_SWITCHING_KEY, 'v'],
+};
+
+export type OtherStandardShortcuts = 'SWITCH_TO_LAST_APPLICATION';
+
+export const otherStandardShortcuts: Shortcuts<OtherStandardShortcuts> = {
+  SWITCH_TO_LAST_APPLICATION: {
+    from: `${APP_SWITCHING_KEY},${APP_SWITCHING_KEY}`,
+    to: ['tab', 'left_command'],
+  },
 };
