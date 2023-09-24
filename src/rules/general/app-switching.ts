@@ -5,7 +5,6 @@ import {
   AppSwitchingShortcutsKeys,
   otherStandardShortcuts,
 } from '../../shortcuts/general/app-switching';
-import { getManipulators } from '../rules-helpers';
 import { ClickHelper } from '../../lib-extensions/click-helper';
 
 const Apps = {
@@ -72,9 +71,10 @@ const configsForApps: Record<
   VSCODE: { app: Apps.VSCODE },
 };
 const clickHelper = new ClickHelper();
+clickHelper.registerShortcuts(otherStandardShortcuts);
 function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
   const config = configsForApps[appSwitchingKey];
-  return clickHelper.twoClickSequence(
+  clickHelper.registerTwoClickSequence(
     ...appSwitchingShortcuts[appSwitchingKey],
     (x) =>
       x.to$(
@@ -85,16 +85,14 @@ function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
   );
 }
 
+(Object.keys(configsForApps) as AppSwitchingShortcutsKeys[]).forEach(
+  (appSwitchingKey) => openApp(appSwitchingKey),
+);
+clickHelper.registerShortcuts(otherStandardShortcuts);
 const rules = [
-  rule('switch apps', ifVimModeEnabled).manipulators([
-    ...(Object.keys(configsForApps) as AppSwitchingShortcutsKeys[]).flatMap(
-      (appSwitchingKey) => openApp(appSwitchingKey),
-    ),
-  ]),
-  rule('other commands', ifVimModeEnabled).manipulators([
-    ...getManipulators(otherStandardShortcuts, clickHelper),
-    ...clickHelper.getPostProcessManipulators(),
-  ]),
+  rule('App switching commands', ifVimModeEnabled).manipulators(
+    clickHelper.getManipulators(),
+  ),
 ];
 
 export default rules;

@@ -3,87 +3,75 @@ import { FromAndToKeyCode, map, rule } from 'karabiner.ts';
 import { ClickHelper } from '../../lib-extensions/click-helper';
 
 const clickHelper = new ClickHelper();
+// Deletion rules
+clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 's', (x) =>
+  x.to('left_arrow', ['left_shift', 'left_option']).to('x', ['left_command']),
+);
+clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 's', (x) =>
+  x.to('left_arrow', ['left_shift', 'left_option']).to('x', ['left_command']),
+);
+clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 'f', (x) => {
+  return x
+    .to('right_arrow', ['left_shift', 'left_option'])
+    .to('x', ['left_command']);
+});
+clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 'a', (x) => {
+  return x
+    .to('left_arrow', ['left_command', 'left_shift'])
+    .to('x', ['left_command']);
+});
+clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 'g', (x) => {
+  return x
+    .to('right_arrow', ['left_command', 'left_shift'])
+    .to('x', ['left_command']);
+});
+
+// Copying rules
+clickHelper.registerTwoClickSequence('y', 'l', (x) =>
+  x
+    .to('left_arrow', ['left_command'])
+    .to('right_arrow', ['left_command', 'left_shift'])
+    .to('c', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('y', 'f', (x) =>
+  x.to('right_arrow', ['left_shift', 'left_option']).to('c', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('y', 's', (x) =>
+  x.to('left_arrow', ['left_shift', 'left_option']).to('c', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('y', 'g', (x) =>
+  x.to('right_arrow', ['left_shift', 'left_command']).to('c', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('y', 'a', (x) =>
+  x.to('left_arrow', ['left_shift', 'left_command']).to('c', ['left_command']),
+);
+
+// Cutting rules:
+clickHelper.registerTwoClickSequence('c', 'l', (x) =>
+  x
+    .to('left_arrow', ['left_command'])
+    .to('right_arrow', ['left_command', 'left_shift'])
+    .to('x', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('c', 'f', (x) =>
+  x.to('right_arrow', ['left_shift', 'left_option']).to('x', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('c', 's', (x) =>
+  x.to('left_arrow', ['left_shift', 'left_option']).to('x', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('c', 'g', (x) =>
+  x.to('right_arrow', ['left_shift', 'left_command']).to('x', ['left_command']),
+);
+clickHelper.registerTwoClickSequence('c', 'a', (x) =>
+  x.to('left_arrow', ['left_shift', 'left_command']).to('x', ['left_command']),
+);
 const rules = [
   rule('deletion rules', ifVimModeEnabled).manipulators([
     map('h').to('delete_forward'),
     map('h', ['left_command']).to('delete_or_backspace'),
-    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 's', (x) =>
-      x
-        .to('left_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']),
-    ),
-    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 'f', (x) => {
-      return x
-        .to('right_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']);
-    }),
-    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 'a', (x) => {
-      return x
-        .to('left_arrow', ['left_command', 'left_shift'])
-        .to('x', ['left_command']);
-    }),
-    clickHelper.secondKeyPressedWhileFirstHeldDown('d', 'g', (x) => {
-      return x
-        .to('right_arrow', ['left_command', 'left_shift'])
-        .to('x', ['left_command']);
-    }),
   ]),
   rule('copying rules', ifVimModeEnabled).manipulators([
-    clickHelper.twoClickSequence('y', 'l', (x) =>
-      x
-        .to('left_arrow', ['left_command'])
-        .to('right_arrow', ['left_command', 'left_shift'])
-        .to('c', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('y', 'f', (x) =>
-      x
-        .to('right_arrow', ['left_shift', 'left_option'])
-        .to('c', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('y', 's', (x) =>
-      x
-        .to('left_arrow', ['left_shift', 'left_option'])
-        .to('c', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('y', 'g', (x) =>
-      x
-        .to('right_arrow', ['left_shift', 'left_command'])
-        .to('c', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('y', 'a', (x) =>
-      x
-        .to('left_arrow', ['left_shift', 'left_command'])
-        .to('c', ['left_command']),
-    ),
     map('c').to('c', ['left_command']),
-  ]),
-  rule('cutting rules', ifVimModeEnabled).manipulators([
-    clickHelper.twoClickSequence('c', 'l', (x) =>
-      x
-        .to('left_arrow', ['left_command'])
-        .to('right_arrow', ['left_command', 'left_shift'])
-        .to('x', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('c', 'f', (x) =>
-      x
-        .to('right_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('c', 's', (x) =>
-      x
-        .to('left_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('c', 'g', (x) =>
-      x
-        .to('right_arrow', ['left_shift', 'left_command'])
-        .to('x', ['left_command']),
-    ),
-    clickHelper.twoClickSequence('c', 'a', (x) =>
-      x
-        .to('left_arrow', ['left_shift', 'left_command'])
-        .to('x', ['left_command']),
-    ),
   ]),
   rule('pasting and undoing/redoing', ifVimModeEnabled).manipulators([
     map('p').to('v', ['left_command']),
@@ -119,8 +107,10 @@ const rules = [
     ),
     map('grave_accent_and_tilde').to('escape'),
     map('slash').to('return_or_enter'),
-    ...clickHelper.getPostProcessManipulators(),
   ]),
+  rule('All other rules', ifVimModeEnabled).manipulators(
+    clickHelper.getManipulators(),
+  ),
 ];
 
 export default rules;
