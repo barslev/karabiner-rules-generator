@@ -60,11 +60,7 @@ export class ClickHelper {
   ): void {
     this.setupFirstClick(from1);
     this.secondKeyManipulators.push(
-      applyTo(
-        map(from2)
-          .condition(ifVar(`${from1}_pressed`, 1))
-          .condition(ifVar(`${from1}_held_down`, 1)),
-      ),
+      applyTo(map(from2).condition(ifVar(`${from1}_held_down`, 1))),
     );
   }
 
