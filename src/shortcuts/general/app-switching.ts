@@ -1,4 +1,4 @@
-import { FromKeyParam } from 'karabiner.ts';
+import { FromKeyParam, toKey, toTypeSequence } from 'karabiner.ts';
 import { Shortcuts } from '../shortcut-helpers';
 
 const APP_SWITCHING_KEY = 'd';
@@ -50,11 +50,20 @@ export const appSwitchingShortcuts: Record<
   KARABINER_EVENT_VIEWER: [APP_SWITCHING_KEY, 'e'],
 };
 
-export type OtherStandardShortcuts = 'SWITCH_TO_LAST_APPLICATION';
+export type OtherStandardShortcuts = 'SWITCH_TO_LAST_APPLICATION' | 'GQUEUES';
 
 export const otherStandardShortcuts: Shortcuts<OtherStandardShortcuts> = {
   SWITCH_TO_LAST_APPLICATION: {
     from: `${APP_SWITCHING_KEY},${APP_SWITCHING_KEY}`,
     to: ['tab', 'left_command'],
+  },
+  GQUEUES: {
+    from: `${APP_SWITCHING_KEY},q`,
+    to: (x) =>
+      x
+        .toApp('Google Chrome')
+        .toDelayedAction(toKey('a', ['left_shift', 'left_command']), [])
+        .toDelayedAction(toTypeSequence('gqueues'), [])
+        .toDelayedAction(toKey('return_or_enter'), []),
   },
 };
