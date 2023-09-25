@@ -18,6 +18,8 @@ const Apps = {
   SLACK: 'Slack.app',
   TERMINAL: 'Terminal.app',
   VSCODE: 'Visual Studio Code.app',
+  KARABINER_ELEMENTS: 'Karabiner-Elements.app',
+  KARABINER_EVENT_VIEWER: 'Karabiner-EventViewer.app',
 };
 
 const configsForApps: Record<
@@ -69,6 +71,8 @@ const configsForApps: Record<
   SLACK: { app: Apps.SLACK },
   TERMINAL: { app: Apps.TERMINAL },
   VSCODE: { app: Apps.VSCODE },
+  KARABINER_ELEMENTS: { app: Apps.KARABINER_ELEMENTS },
+  KARABINER_EVENT_VIEWER: { app: Apps.KARABINER_EVENT_VIEWER },
 };
 const clickHelper = new ClickHelper();
 clickHelper.registerShortcuts(otherStandardShortcuts);
