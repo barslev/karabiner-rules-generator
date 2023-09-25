@@ -51,7 +51,6 @@ export class ClickHelper {
       applyTo(
         map(from2)
           .toVar(`${from1}_pressed`, 0)
-          .toNotificationMessage('apply-click-2', 'apply-click-2')
           .condition(ifVar(`${from1}_pressed`, 1))
           .condition(ifVar(`${from1}_held_down`, 0)),
       ),
