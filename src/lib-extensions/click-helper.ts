@@ -102,7 +102,7 @@ export class ClickHelper {
       .filter((shortcut) => shortcut.from[0])
       .flatMap((shortcut) => {
         if (Array.isArray(shortcut.from))
-          this.setupBasic(shortcut.from, shortcut.to);
+          this.setupBasic(shortcut.from, shortcut.to, shortcut.options);
         else {
           const toHandler = (x: ManipulatorBuilder) => {
             let res =
