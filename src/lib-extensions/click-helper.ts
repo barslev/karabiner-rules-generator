@@ -7,7 +7,11 @@ import {
   ToKeyParam,
   toSetVar,
 } from 'karabiner.ts';
-import { ShortcutDescriptor, Shortcuts } from '../shortcuts/shortcut-helpers';
+import {
+  Options,
+  ShortcutDescriptor,
+  Shortcuts,
+} from '../shortcuts/shortcut-helpers';
 import { setModeToNoMode } from '../rules/general/mode-switching';
 
 export type ManipulatorBuilder = ReturnType<typeof map>;
@@ -19,6 +23,7 @@ export class ClickHelper {
   private readonly singleKeyManipulators: ManipulatorBuilder[] = [];
 
   private setupFirstClick(from1: FromKeyParam): void {
+    if (this.firstKeyManipulators.has(from1)) return;
     this.firstKeyManipulators.set(
       from1,
       map(from1)
@@ -65,17 +70,23 @@ export class ClickHelper {
   }
 
   setupBasic(
-    from: [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined],
+    from:
+      | [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined]
+      | FromKeyCode,
     to:
       | [ToKeyParam, ModifierParam | undefined]
+      | ToKeyParam
       | ((x: ManipulatorBuilder) => ManipulatorBuilder),
+    options?: Options,
   ): void {
-    const fromManipulator = map(...from);
-    this.singleKeyManipulators.push(
+    const fromManipulator = Array.isArray(from) ? map(...from) : map(from);
+    const toEvent =
       typeof to === 'function'
         ? to(fromManipulator)
-        : fromManipulator.toIfAlone(...to),
-    );
+        : Array.isArray(to)
+        ? fromManipulator.toIfAlone(...to)
+        : fromManipulator.toIfAlone(to);
+    this.singleKeyManipulators.push(applyOptions(options, toEvent));
   }
 
   getManipulators() {
@@ -98,9 +109,7 @@ export class ClickHelper {
               typeof shortcut.to === 'function'
                 ? shortcut.to(x)
                 : x.to(...shortcut.to);
-            if (shortcut.options?.disableVimMode) res = setModeToNoMode(res);
-            if (shortcut.options?.returnToVimOnEnter)
-              res.toVar('return_to_vim_on_enter', 1);
+            res = applyOptions(shortcut.options, res);
             return res;
           };
           if (shortcut.from.includes(',')) {
@@ -121,4 +130,10 @@ export class ClickHelper {
         }
       });
   }
+}
+function applyOptions(options: Options | undefined, res: ManipulatorBuilder) {
+  if (!options) return res;
+  if (options?.disableVimMode) res = setModeToNoMode(res);
+  if (options?.returnToVimOnEnter) res.toVar('return_to_vim_on_enter', 1);
+  return res;
 }

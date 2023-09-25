@@ -1,5 +1,5 @@
-import { ifVimModeEnabled, setModeToNoMode } from './mode-switching';
-import { FromAndToKeyCode, map, rule } from 'karabiner.ts';
+import { ifVimModeEnabled } from './mode-switching';
+import { FromAndToKeyCode, rule } from 'karabiner.ts';
 import { ClickHelper } from '../../lib-extensions/click-helper';
 
 const clickHelper = new ClickHelper();
@@ -25,7 +25,8 @@ clickHelper.registerSecondKeyPressedWhileFirstHeldDown('d', 'g', (x) => {
     .to('right_arrow', ['left_command', 'left_shift'])
     .to('x', ['left_command']);
 });
-
+clickHelper.setupBasic('h', 'delete_forward');
+clickHelper.setupBasic(['h', 'left_command', undefined], 'delete_or_backspace');
 // Copying rules
 clickHelper.registerTwoClickSequence('y', 'y', (x) =>
   x
@@ -45,7 +46,7 @@ clickHelper.registerTwoClickSequence('y', 'g', (x) =>
 clickHelper.registerTwoClickSequence('y', 'a', (x) =>
   x.to('left_arrow', ['left_shift', 'left_command']).to('c', ['left_command']),
 );
-
+clickHelper.setupBasic('c', ['c', ['left_command']]);
 // Cutting rules:
 clickHelper.registerTwoClickSequence('c', 'l', (x) =>
   x
@@ -65,49 +66,69 @@ clickHelper.registerTwoClickSequence('c', 'g', (x) =>
 clickHelper.registerTwoClickSequence('c', 'a', (x) =>
   x.to('left_arrow', ['left_shift', 'left_command']).to('x', ['left_command']),
 );
+
+// pasting and undoing/redoing
+clickHelper.setupBasic('p', ['v', ['left_command']]);
+clickHelper.setupBasic('u', ['z', ['left_command']]);
+clickHelper.setupBasic(
+  ['u', 'left_command', undefined],
+  ['z', ['left_shift', 'left_command']],
+);
+
+// navigation rules
+clickHelper.setupBasic(
+  ['j', undefined, ['control', 'option', 'command', 'shift']],
+  'left_arrow',
+);
+clickHelper.setupBasic(
+  ['k', undefined, ['control', 'option', 'command', 'shift']],
+  'down_arrow',
+);
+clickHelper.setupBasic(
+  ['l', undefined, ['control', 'option', 'command', 'shift']],
+  'up_arrow',
+);
+clickHelper.setupBasic(
+  ['semicolon', undefined, ['control', 'option', 'command', 'shift']],
+  'right_arrow',
+);
+clickHelper.setupBasic('f', ['right_arrow', ['left_option']]);
+clickHelper.setupBasic('s', ['left_arrow', ['left_option']]);
+clickHelper.setupBasic(
+  ['f', 'left_option', undefined],
+  ['right_arrow', ['left_command']],
+);
+clickHelper.setupBasic(
+  ['s', 'left_option', undefined],
+  ['left_arrow', ['left_command']],
+);
+clickHelper.setupBasic(
+  ['s', 'right_option', undefined],
+  ['left_arrow', ['fn', 'left_command']],
+);
+clickHelper.setupBasic(
+  ['f', 'right_option', undefined],
+  ['right_arrow', ['fn', 'left_command']],
+);
+
+// normal command key combinations
+(['v', 'z'] as FromAndToKeyCode[]).forEach((key) =>
+  clickHelper.setupBasic(
+    [key, 'left_command', undefined],
+    [key, 'left_command'],
+  ),
+);
+(['f', 'i', 'r'] as FromAndToKeyCode[]).forEach((key) =>
+  clickHelper.setupBasic(
+    [key, 'left_command', undefined],
+    [key, 'left_command'],
+    { disableVimMode: true },
+  ),
+);
+clickHelper.setupBasic('grave_accent_and_tilde', 'escape');
+
+clickHelper.setupBasic('slash', 'return_or_enter');
 const rules = [
-  rule('deletion rules', ifVimModeEnabled).manipulators([
-    map('h').to('delete_forward'),
-    map('h', ['left_command']).to('delete_or_backspace'),
-  ]),
-  rule('copying rules', ifVimModeEnabled).manipulators([
-    map('c').to('c', ['left_command']),
-  ]),
-  rule('pasting and undoing/redoing', ifVimModeEnabled).manipulators([
-    map('p').to('v', ['left_command']),
-    map('u').to('z', ['left_command']),
-    map('u', ['left_command']).to('z', ['left_shift', 'left_command']),
-  ]),
-  rule('navigation rules', ifVimModeEnabled).manipulators([
-    map('j', undefined, ['control', 'option', 'command', 'shift']).to(
-      'left_arrow',
-    ),
-    map('k', undefined, ['control', 'option', 'command', 'shift']).to(
-      'down_arrow',
-    ),
-    map('l', undefined, ['control', 'option', 'command', 'shift']).to(
-      'up_arrow',
-    ),
-    map('semicolon', undefined, ['control', 'option', 'command', 'shift']).to(
-      'right_arrow',
-    ),
-    map('f').to('right_arrow', ['left_option']),
-    map('s').to('left_arrow', ['left_option']),
-    map('s', ['left_option']).to('left_arrow', ['left_command']),
-    map('f', ['left_option']).to('right_arrow', ['left_command']),
-    map('s', ['right_option']).to('left_arrow', ['fn', 'left_command']),
-    map('f', ['right_option']).to('right_arrow', ['fn', 'left_command']),
-  ]),
-  rule('normal command key combinations', ifVimModeEnabled).manipulators([
-    ...(['v', 'z'] as FromAndToKeyCode[]).map((key) =>
-      map(key, 'left_command').to(key, 'left_command'),
-    ),
-    ...(['f', 'i', 'r'] as FromAndToKeyCode[]).map((key) =>
-      setModeToNoMode(map(key, 'left_command').to(key, 'left_command')),
-    ),
-    map('grave_accent_and_tilde').to('escape'),
-    map('slash').to('return_or_enter'),
-  ]),
   rule('All other rules', ifVimModeEnabled).manipulators(
     clickHelper.getManipulators(),
   ),
