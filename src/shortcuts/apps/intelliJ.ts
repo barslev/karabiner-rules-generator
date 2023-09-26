@@ -45,7 +45,8 @@ type IntelliJShortcutsKeys =
   | 'DELETE_LINE'
   | 'NEXT_CHANGE'
   | 'PREVIOUS_CHANGE'
-  | 'RERUN_LAST_TERMINAL_COMMAND';
+  | 'RERUN_LAST_TERMINAL_COMMAND'
+  | 'GO_TO_LINE';
 
 export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   BACK: {
@@ -228,5 +229,9 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
         .to(toKey('up_arrow'))
         .to(toKey('return_or_enter'))
         .to(toKey('escape')),
+  },
+  GO_TO_LINE: {
+    from: 'a,j',
+    to: ['l', 'left_command'],
   },
 };
