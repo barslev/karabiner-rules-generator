@@ -83,8 +83,8 @@ export class ClickHelper {
       typeof to === 'function'
         ? to(fromManipulator)
         : Array.isArray(to)
-        ? fromManipulator.toIfAlone(...to)
-        : fromManipulator.toIfAlone(to);
+        ? fromManipulator.to(...to)
+        : fromManipulator.to(to);
     this.singleKeyManipulators.push(applyOptions(options, toEvent));
   }
 
