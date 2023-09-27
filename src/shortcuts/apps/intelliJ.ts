@@ -37,16 +37,20 @@ type IntelliJShortcutsKeys =
   | 'GIT_BRANCHES'
   | 'GIT_FETCH'
   | 'GIT_COMMIT'
+  | 'GIT_COMMIT_MESSAGE'
   | 'GIT_PUSH'
   | 'GIT_PULL'
   | 'GIT_NEW_BRANCH'
+  | 'GIT_OPEN_ON_GITHUB'
   | 'EXPAND_BLOCK_SELECTION'
   | 'DECREASE_BLOCK_SELECTION'
   | 'DELETE_LINE'
   | 'NEXT_CHANGE'
   | 'PREVIOUS_CHANGE'
   | 'RERUN_LAST_TERMINAL_COMMAND'
-  | 'GO_TO_LINE';
+  | 'GO_TO_LINE'
+  | 'NEXT_USAGE'
+  | 'PREVIOUS_USAGE';
 
 export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   BACK: {
@@ -95,7 +99,18 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   },
   GIT_COMMIT: {
     from: 'period,k',
+    to: (x: ManipulatorBuilder) =>
+      x
+        .to('k', ['left_command', 'left_control', 'left_option'])
+        .toDelayedAction(toKey('tab', 'left_shift'), [])
+        .toDelayedAction(toKey('down_arrow'), [])
+        .toDelayedAction(toKey('return_or_enter'), [])
+        .parameters({ 'basic.to_delayed_action_delay_milliseconds': 100 }),
+  },
+  GIT_COMMIT_MESSAGE: {
+    from: 'period,semicolon',
     to: ['k', ['left_command', 'left_control', 'left_option']],
+    options: { disableVimMode: true },
   },
   GIT_FETCH: {
     from: 'period,f',
@@ -104,6 +119,10 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   GIT_NEW_BRANCH: {
     from: 'period,n',
     to: ['n', ['left_option', 'left_command']],
+  },
+  GIT_OPEN_ON_GITHUB: {
+    from: 'period,g',
+    to: ['y', ['left_shift', 'left_command', 'left_control']],
   },
   GIT_PULL: {
     from: 'period,d',
@@ -242,5 +261,13 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   GO_TO_LINE: {
     from: 'a,j',
     to: ['l', 'left_command'],
+  },
+  NEXT_USAGE: {
+    from: 'caps_lock+k',
+    to: ['f7', undefined],
+  },
+  PREVIOUS_USAGE: {
+    from: 'caps_lock+l',
+    to: ['f7', 'left_shift'],
   },
 };
