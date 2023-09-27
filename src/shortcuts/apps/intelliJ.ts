@@ -107,7 +107,7 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   },
   GIT_PULL: {
     from: 'period,d',
-    to: ['l', ['left_command', 'left_shift']],
+    to: ['l', ['left_command', 'left_shift', 'left_option', 'left_control']],
   },
   GIT_PUSH: {
     from: 'period,l',
@@ -176,34 +176,42 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   SEARCH_ACE_JUMP: {
     from: 'a,f',
     to: ['quote', ['left_option', 'left_command']],
+    options: { disableVimMode: true },
   },
   SEARCH_ACE_JUMP_LINE: {
     from: ['r', undefined, undefined],
     to: ['f', ['left_control', 'left_option', 'left_command']],
+    options: { disableVimMode: true },
   },
   SEARCH_ACE_JUMP_TARGET: {
     from: ['g', undefined, undefined],
     to: ['semicolon', ['left_option', 'left_command']],
+    options: { disableVimMode: true },
   },
   SEARCH_CLASS: {
     from: 'caps_lock,u',
     to: ['o', ['left_control', 'left_shift', 'left_command', 'left_option']],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   SEARCH_FILES: {
     from: 'caps_lock,i',
     to: ['o', ['left_shift', 'left_command']],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   SEARCH_STRUCTURE: {
     from: 'caps_lock,o',
     to: ['o', 'left_option'],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   SEARCH_SYMBOLS: {
     from: 'caps_lock,p',
     to: ['o', ['left_option', 'left_command']],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   SELECT_IN: {
     from: 'caps_lock,w',
     to: ['f1', 'left_option'],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   SHOW_CONTEXT_MENU: {
     from: ['z', undefined, undefined],
@@ -226,9 +234,9 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: (x: ManipulatorBuilder) =>
       x
         .to(...(intelliJShortcuts.JUMP_TO_TERMINAL.to as ToKey))
-        .to(toKey('up_arrow'))
-        .to(toKey('return_or_enter'))
-        .to(toKey('escape')),
+        .toDelayedAction(toKey('up_arrow'), [])
+        .toDelayedAction(toKey('return_or_enter'), [])
+        .toDelayedAction(toKey('escape'), []),
   },
   GO_TO_LINE: {
     from: 'a,j',

@@ -52,10 +52,12 @@ export const chromeShortcuts: Shortcuts<ShortcutsKeys> = {
   NEW_TAB: {
     from: ['t', undefined, undefined],
     to: ['t', { left: '⌘' }],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   NEW_WINDOW: {
     from: ['b', undefined, undefined],
     to: ['n', { left: '⌘' }],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   OPEN_CLIPBOARD_URL_IN_CURRENT_TAB: {
     from: ['a', undefined, undefined],
