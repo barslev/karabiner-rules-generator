@@ -236,7 +236,8 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
         .to(...(intelliJShortcuts.JUMP_TO_TERMINAL.to as ToKey))
         .toDelayedAction(toKey('up_arrow'), [])
         .toDelayedAction(toKey('return_or_enter'), [])
-        .toDelayedAction(toKey('escape'), []),
+        .toDelayedAction(toKey('escape'), [])
+        .parameters({ 'basic.to_delayed_action_delay_milliseconds': 100 }),
   },
   GO_TO_LINE: {
     from: 'a,j',
