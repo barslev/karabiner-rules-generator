@@ -88,6 +88,18 @@ export class ClickHelper {
     this.singleKeyManipulators.push(applyOptions(options, toEvent));
   }
 
+  getSecondKeyManipulators() {
+    return this.secondKeyManipulators;
+  }
+
+  getFirstKeyManipulators() {
+    return [...this.firstKeyManipulators.values()];
+  }
+
+  getSingleKeyManipulators() {
+    return this.singleKeyManipulators;
+  }
+
   getManipulators() {
     return [
       ...this.secondKeyManipulators,

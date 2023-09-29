@@ -55,14 +55,26 @@ export class ClickHelperWrapper {
     );
   }
 
-  getRules() {
+  getRules(): ReturnType<typeof rule>[] {
+    const getRulesByManipulatorType = (kind: 'second' | 'first' | 'single') =>
+      Object.entries(this.rulesAndClickHelpers)
+        .map(([ruleName, { conditions, clickHelper }]) => {
+          const manipulators =
+            kind === 'second'
+              ? clickHelper.getSecondKeyManipulators()
+              : kind === 'first'
+              ? clickHelper.getFirstKeyManipulators()
+              : clickHelper.getSingleKeyManipulators();
+          if (manipulators.length === 0) return undefined;
+          return rule(`${ruleName}-${kind}`, ...conditions).manipulators(
+            manipulators,
+          );
+        })
+        .filter((rule) => rule) as ReturnType<typeof rule>[];
     return [
-      ...Object.entries(this.rulesAndClickHelpers).map(
-        ([ruleName, { conditions, clickHelper }]) =>
-          rule(ruleName, ...conditions).manipulators(
-            clickHelper.getManipulators(), // TODO: split out in keys
-          ),
-      ),
+      ...getRulesByManipulatorType('second'),
+      ...getRulesByManipulatorType('first'),
+      ...getRulesByManipulatorType('single'),
       ...this.additionalRules,
     ];
   }
