@@ -1,5 +1,6 @@
 import { FromAndToKeyCode, map, rule } from 'karabiner.ts';
-import { ifNotNormalMode } from './mode-switching';
+import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
+import { ifNotNormalMode } from '../rules-helpers';
 
 const modifierKeys = [
   'left_shift',
@@ -12,11 +13,11 @@ const modifierKeys = [
   'right_command',
 ] as FromAndToKeyCode[];
 
-const rules = [
-  rule('Disable unused keys in vim mode', ifNotNormalMode).manipulators([
-    ...modifierKeys.map((key) => map(key, undefined, 'any').to(key)),
-    map({ any: 'key_code', modifiers: { optional: ['any'] } }).to('vk_none'),
-  ]),
-];
-
-export default rules;
+export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
+  clickHelperWrapper.addRule(
+    rule('Disable unused keys in vim mode', ifNotNormalMode).manipulators([
+      ...modifierKeys.map((key) => map(key, undefined, 'any').to(key)),
+      map({ any: 'key_code', modifiers: { optional: ['any'] } }).to('vk_none'),
+    ]),
+  );
+}

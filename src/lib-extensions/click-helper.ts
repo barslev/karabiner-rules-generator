@@ -12,7 +12,7 @@ import {
   ShortcutDescriptor,
   Shortcuts,
 } from '../shortcuts/shortcut-helpers';
-import { setModeToNoMode } from '../rules/general/mode-switching';
+import { setModeToNoMode, setModeToVim } from '../rules/rules-helpers';
 
 export type ManipulatorBuilder = ReturnType<typeof map>;
 
@@ -133,6 +133,7 @@ export class ClickHelper {
 function applyOptions(options: Options | undefined, res: ManipulatorBuilder) {
   if (!options) return res;
   if (options?.disableVimMode) res = setModeToNoMode(res);
+  if (options?.enableVimMode) res = setModeToVim(res);
   if (options?.returnToVimOnEnter) res.toVar('return_to_vim_on_enter', 1);
   return res;
 }

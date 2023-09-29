@@ -1,14 +1,8 @@
-import { ifVimModeEnabled } from './mode-switching';
-import { rule } from 'karabiner.ts';
-import { ClickHelper } from '../../lib-extensions/click-helper';
 import { vimModeShortcuts } from '../../shortcuts/general/vim-mode';
+import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
+import { ifVimModeEnabled } from '../rules-helpers';
 
-const clickHelper = new ClickHelper();
-clickHelper.registerShortcuts(vimModeShortcuts);
-const rules = [
-  rule('Vim mode rules', ifVimModeEnabled).manipulators(
-    clickHelper.getManipulators(),
-  ),
-];
-
-export default rules;
+export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
+  clickHelperWrapper.startRule('Vim mode rules', [ifVimModeEnabled]);
+  clickHelperWrapper.registerShortcuts(vimModeShortcuts);
+}

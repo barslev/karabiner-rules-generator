@@ -1,109 +1,22 @@
+import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
 import {
-  ifVar,
-  map,
-  rule,
-  toNotificationMessage,
-  toSetVar,
-} from 'karabiner.ts';
-import { VimModeShortcuts } from '../../shortcuts/general/general';
+  ModeSwitchingFromNoModeShortcuts,
+  ModeSwitchingFromVimModeShortcuts,
+  ModeSwitchingFromVisualModeShortcuts,
+} from '../../shortcuts/general/mode-switching';
+import {
+  ifNormalMode,
+  ifVimModeEnabled,
+  ifVisualModeEnabled,
+} from '../rules-helpers';
 
-const vimNotificationKey = 'Vim mode enabled';
-const VIM_MODE_VARIABLE = 'vim_mode';
-const NO_MODE = 0;
-const VIM_MODE = 1;
-const VISUAL_MODE = 2;
+export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
+  clickHelperWrapper.startRule('from normal mode to vim mode', [ifNormalMode]);
+  clickHelperWrapper.registerShortcuts(ModeSwitchingFromNoModeShortcuts);
 
-export const setModeToVimNotificationToEvent = toNotificationMessage(
-  vimNotificationKey,
-  'Vim mode',
-);
-const setModeToVimToEvent = toSetVar(VIM_MODE_VARIABLE, VIM_MODE);
-const setVimModeWithHalt = setModeToVimToEvent;
-setVimModeWithHalt.halt = true;
-const rules = [
-  rule('Switch to vim mode', ifVar(VIM_MODE_VARIABLE, NO_MODE)).manipulators([
-    map(...VimModeShortcuts.SWITCH_FROM_NORMAL_MODE_TO_VIM_MODE)
-      .toIfAlone(setVimModeWithHalt)
-      .toIfHeldDown(toSetVar(VIM_MODE_VARIABLE, VIM_MODE))
-      .to(setModeToVimNotificationToEvent)
-      .toAfterKeyUp(toSetVar(VIM_MODE_VARIABLE, NO_MODE))
-      .toAfterKeyUp(toNotificationMessage(vimNotificationKey, ''))
-      .parameters({
-        'basic.to_if_held_down_threshold_milliseconds': 50,
-      }),
-  ]),
-  rule(
-    'Switch mode from vim_mode',
-    ifVar(VIM_MODE_VARIABLE, VIM_MODE),
-  ).manipulators([
-    setModeToNoMode(map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE)),
-    setModeToNoMode(
-      map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_START_LINE).to(
-        'left_arrow',
-        ['left_command'],
-      ),
-    ),
-    setModeToNoMode(
-      map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_END_LINE).to(
-        'right_arrow',
-        ['left_command'],
-      ),
-    ),
-    setModeToNoMode(
-      map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_NEW_LINE_BELOW)
-        .to('right_arrow', ['left_command'])
-        .to('return_or_enter'),
-    ),
-    setModeToNoMode(
-      map(
-        ...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_COMMA_AT_END_LINE_AND_NEW_LINE_BELOW,
-      )
-        .to('right_arrow', ['left_command'])
-        .to('comma')
-        .to('return_or_enter'),
-    ),
-    setModeToNoMode(
-      map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_NEW_LINE_ABOVE)
-        .to('left_arrow', ['left_command'])
-        .to('return_or_enter')
-        .to('up_arrow'),
-    ),
-    setModeToNoMode(
-      map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_TARGET)
-        .to('left_arrow', ['left_option'])
-        .to('right_arrow', ['left_option', 'left_shift']),
-    ),
-    setModeToNoMode(
-      map(...VimModeShortcuts.SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_TARGET_LINE)
-        .to('left_arrow', ['left_command'])
-        .to('right_arrow', ['left_command', 'left_shift']),
-    ),
-    map(...VimModeShortcuts.SWITCH_FROM_VIM_MODE_TO_VISUAL_MODE)
-      .to(toSetVar(VIM_MODE_VARIABLE, VISUAL_MODE))
-      .toNotificationMessage(vimNotificationKey, 'Visual mode'),
-  ]),
-  rule(
-    'Switch visual mode off',
-    ifVar(VIM_MODE_VARIABLE, VISUAL_MODE),
-  ).manipulators([
-    setModeToVim(map(...VimModeShortcuts.SWITCH_FROM_VISUAL_MODE_TO_VIM_MODE)),
-  ]),
-];
+  clickHelperWrapper.startRule('from vim mode', [ifVimModeEnabled]);
+  clickHelperWrapper.registerShortcuts(ModeSwitchingFromVimModeShortcuts);
 
-export const ifVimModeEnabled = ifVar(VIM_MODE_VARIABLE, VIM_MODE);
-export const ifVisualModeEnabled = ifVar(VIM_MODE_VARIABLE, VISUAL_MODE);
-
-export const ifNotNormalMode = ifVar(VIM_MODE_VARIABLE, NO_MODE).unless();
-
-export function setModeToNoMode(x: ReturnType<typeof map>) {
-  return x
-    .toVar(VIM_MODE_VARIABLE, NO_MODE)
-    .toRemoveNotificationMessage(vimNotificationKey);
+  clickHelperWrapper.startRule('from visual mode', [ifVisualModeEnabled]);
+  clickHelperWrapper.registerShortcuts(ModeSwitchingFromVisualModeShortcuts);
 }
-export function setModeToVim(x: ReturnType<typeof map>) {
-  return x
-    .toVar(VIM_MODE_VARIABLE, VIM_MODE)
-    .toNotificationMessage(vimNotificationKey, 'Vim mode');
-}
-
-export default rules;

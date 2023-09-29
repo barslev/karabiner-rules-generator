@@ -1,11 +1,10 @@
-import { ifVimModeEnabled } from './mode-switching';
-import { rule } from 'karabiner.ts';
 import {
   appSwitchingShortcuts,
   AppSwitchingShortcutsKeys,
   otherStandardShortcuts,
 } from '../../shortcuts/general/app-switching';
-import { ClickHelper } from '../../lib-extensions/click-helper';
+import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
+import { ifVimModeEnabled } from '../rules-helpers';
 
 const Apps = {
   INTELLIJ: 'IntelliJ IDEA.app',
@@ -116,29 +115,23 @@ const configsForApps: Record<
   KARABINER_ELEMENTS: { app: Apps.KARABINER_ELEMENTS },
   KARABINER_EVENT_VIEWER: { app: Apps.KARABINER_EVENT_VIEWER },
 };
-const clickHelper = new ClickHelper();
-clickHelper.registerShortcuts(otherStandardShortcuts);
-function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
-  const config = configsForApps[appSwitchingKey];
-  clickHelper.registerTwoClickSequence(
-    ...appSwitchingShortcuts[appSwitchingKey],
-    (x) =>
-      x.to$(
-        `open -${config.args ? 'n' : ''}a '${config.app}' ${
-          !config.args ? '' : `--args ${config.args}`
-        }`,
-      ),
+export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
+  clickHelperWrapper.startRule('App switching commands', [ifVimModeEnabled]);
+  (Object.keys(configsForApps) as AppSwitchingShortcutsKeys[]).forEach(
+    (appSwitchingKey) => openApp(appSwitchingKey),
   );
+  clickHelperWrapper.registerShortcuts(otherStandardShortcuts);
+
+  function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
+    const config = configsForApps[appSwitchingKey];
+    clickHelperWrapper.registerTwoClickSequence(
+      ...appSwitchingShortcuts[appSwitchingKey],
+      (x) =>
+        x.to$(
+          `open -${config.args ? 'n' : ''}a '${config.app}' ${
+            !config.args ? '' : `--args ${config.args}`
+          }`,
+        ),
+    );
+  }
 }
-
-(Object.keys(configsForApps) as AppSwitchingShortcutsKeys[]).forEach(
-  (appSwitchingKey) => openApp(appSwitchingKey),
-);
-clickHelper.registerShortcuts(otherStandardShortcuts);
-const rules = [
-  rule('App switching commands', ifVimModeEnabled).manipulators(
-    clickHelper.getManipulators(),
-  ),
-];
-
-export default rules;

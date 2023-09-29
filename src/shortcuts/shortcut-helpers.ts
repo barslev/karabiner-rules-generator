@@ -4,6 +4,7 @@ import { ManipulatorBuilder } from '../lib-extensions/click-helper';
 export type ToKey = [ToKeyParam, ModifierParam | undefined];
 export type Options = {
   disableVimMode?: boolean;
+  enableVimMode?: boolean;
   returnToVimOnEnter?: boolean;
 };
 export type ShortcutDescriptor = {
