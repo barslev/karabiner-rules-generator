@@ -1,4 +1,12 @@
-import { ifVar, map, toNotificationMessage, toSetVar } from 'karabiner.ts';
+import {
+  ConditionBuilder,
+  FromAndToKeyCode,
+  ifVar,
+  map,
+  rule,
+  toNotificationMessage,
+  toSetVar,
+} from 'karabiner.ts';
 
 export function setupReturnToEnterVimMode() {
   return setModeToVim(
@@ -38,4 +46,25 @@ export function setModeToVim(x: ReturnType<typeof map>) {
   return x
     .toVar(VIM_MODE_VARIABLE, VIM_MODE)
     .toNotificationMessage(vimNotificationKey, 'Vim mode');
+}
+
+const modifierKeys = [
+  'left_shift',
+  'right_shift',
+  'left_control',
+  'right_control',
+  'left_option',
+  'right_option',
+  'left_command',
+  'right_command',
+] as FromAndToKeyCode[];
+
+export function getDisableUnusedKeysRule(
+  condition: ConditionBuilder,
+  ruleSuffix: string,
+) {
+  return rule(`Disable unused keys in ${ruleSuffix}`, condition).manipulators([
+    ...modifierKeys.map((key) => map(key, undefined, 'any').to(key)),
+    map({ any: 'key_code', modifiers: { optional: ['any'] } }).to('vk_none'),
+  ]);
 }

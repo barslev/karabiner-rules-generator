@@ -71,8 +71,16 @@ export class ClickHelperWrapper {
           );
         })
         .filter((rule) => rule) as ReturnType<typeof rule>[];
+
+    const getDisableOtherSecondKeyRules = () => {
+      return Object.values(this.rulesAndClickHelpers).flatMap(
+        ({ clickHelper }) => clickHelper.getDisableOtherSecondKeysRule(),
+      );
+    };
+
     return [
       ...getRulesByManipulatorType('second'),
+      ...getDisableOtherSecondKeyRules(),
       ...getRulesByManipulatorType('first'),
       ...getRulesByManipulatorType('single'),
       ...this.additionalRules,

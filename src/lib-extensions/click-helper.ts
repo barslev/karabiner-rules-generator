@@ -12,7 +12,11 @@ import {
   ShortcutDescriptor,
   Shortcuts,
 } from '../shortcuts/shortcut-helpers';
-import { setModeToNoMode, setModeToVim } from '../rules/rules-helpers';
+import {
+  getDisableUnusedKeysRule,
+  setModeToNoMode,
+  setModeToVim,
+} from '../rules/rules-helpers';
 
 export type ManipulatorBuilder = ReturnType<typeof map>;
 
@@ -140,6 +144,16 @@ export class ClickHelper {
           } else throw new Error('Not supported yet');
         }
       });
+  }
+
+  getDisableOtherSecondKeysRule() {
+    const firstKeys = this.firstKeyManipulators.keys();
+    return [...firstKeys].map((firstKey) =>
+      getDisableUnusedKeysRule(
+        ifVar(`${firstKey}_pressed`),
+        `${firstKey}_pressed`,
+      ),
+    );
   }
 }
 function applyOptions(options: Options | undefined, res: ManipulatorBuilder) {
