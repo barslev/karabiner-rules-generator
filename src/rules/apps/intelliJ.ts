@@ -1,7 +1,6 @@
 import { intelliJShortcuts } from '../../shortcuts/apps/intelliJ';
 import { ifApp, rule } from 'karabiner.ts';
 import { ifVimModeEnabled, setupReturnToEnterVimMode } from '../rules-helpers';
-import { ClickHelper } from '../../lib-extensions/click-helper';
 import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
 
 export function registerRules(clickHelperWrapper: ClickHelperWrapper) {

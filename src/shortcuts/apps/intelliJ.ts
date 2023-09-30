@@ -96,6 +96,7 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   GIT_BRANCHES: {
     from: 'period,j',
     to: ['b', 'left_option'],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   GIT_COMMIT: {
     from: 'period,k',
