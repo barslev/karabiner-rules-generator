@@ -22,77 +22,77 @@ type ShortcutsKeys =
 
 export const chromeShortcuts: Shortcuts<ShortcutsKeys> = {
   BACK: {
-    from: ['j', undefined, undefined],
+    from: 'j',
     to: ['left_arrow', { left: '⌘' }],
   },
   FORWARD: {
-    from: ['semicolon', undefined, undefined],
+    from: 'semicolon',
     to: ['right_arrow', { left: '⌘' }],
   },
   GO_TO_URL_BAR: {
-    from: ['u', undefined, undefined],
+    from: 'u',
     to: ['l', { left: '⌘' }],
   },
   SCROLL_PAGE_DOWN: {
-    from: ['k', { left: '⌘' }, undefined],
+    from: ['k', { left: '⌘' }],
     to: ['spacebar', {}],
   },
   SCROLL_PAGE_UP: {
-    from: ['l', { left: '⌘' }, undefined],
+    from: ['l', { left: '⌘' }],
     to: ['spacebar', { left: 'shift' }],
   },
   CLOSE_TAB: {
-    from: ['w', undefined, undefined],
+    from: 'w',
     to: ['w', { left: '⌘' }],
   },
   MOVE_TAB_TO_NEW_WINDOW: {
-    from: ['v', undefined, undefined],
+    from: 'v',
     to: ['w', { left: 'shift' }],
   },
   NEW_TAB: {
-    from: ['t', undefined, undefined],
+    from: 't',
     to: ['t', { left: '⌘' }],
     options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   NEW_WINDOW: {
-    from: ['b', undefined, undefined],
+    from: 'b',
     to: ['n', { left: '⌘' }],
     options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   OPEN_CLIPBOARD_URL_IN_CURRENT_TAB: {
-    from: ['a', undefined, undefined],
-    to: ['p', undefined],
+    from: 'a',
+    to: 'p',
   },
   OPEN_CLIPBOARD_URL_IN_NEW_TAB: {
-    from: ['d', undefined, undefined],
+    from: 'd',
     to: ['p', { left: 'shift' }],
   },
   RELOAD_WEBPAGE: {
-    from: ['r', undefined, undefined],
+    from: 'r',
     to: ['r', { left: '⌘' }],
   },
   SEARCH_WEBPAGE: {
-    from: ['e', undefined, undefined],
+    from: 'e',
     to: ['f', { left: '⌘' }],
   },
   TAB_LEFT: {
-    from: ['n', undefined, undefined],
+    from: 'n',
     to: ['left_arrow', { left: '⌘⌥' }],
   },
   TAB_RIGHT: {
-    from: ['m', undefined, undefined],
+    from: 'm',
     to: ['right_arrow', { left: '⌘⌥' }],
   },
   VIMIUM_SEARCH: {
-    from: ['f', undefined, undefined],
-    to: ['f', {}],
+    from: 'f',
+    to: 'f',
   },
   VIMIUM_SEARCH_ALL_TABS: {
-    from: ['g', undefined, undefined],
+    from: 'g',
     to: ['t', { left: 'shift' }],
   },
   VIMIUM_SEARCH_LINK_NEW_TAB: {
-    from: ['s', undefined, undefined],
+    from: 's',
     to: ['f', { left: 'shift' }],
   },
 };

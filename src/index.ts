@@ -1,4 +1,3 @@
-// import { writeToProfile } from 'karabiner.ts';
 import { registerRules as registerModeSwitchingRules } from './rules/general/mode-switching';
 import { registerRules as registerIntelliJRules } from './rules/apps/intelliJ';
 import { registerRules as registerChromeRules } from './rules/apps/chrome';

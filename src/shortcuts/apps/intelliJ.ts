@@ -54,19 +54,19 @@ type IntelliJShortcutsKeys =
 
 export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   BACK: {
-    from: ['n', undefined, undefined],
+    from: 'n',
     to: ['left_arrow', { left: '⌘⌥' }],
   },
   FORWARD: {
-    from: ['m', undefined, undefined],
+    from: 'm',
     to: ['right_arrow', { left: '⌘⌥' }],
   },
   EXPAND_BLOCK_SELECTION: {
-    from: ['comma', undefined, undefined],
+    from: 'comma',
     to: ['w', 'left_command'],
   },
   DECREASE_BLOCK_SELECTION: {
-    from: ['comma', 'left_option', undefined],
+    from: ['comma', 'left_option'],
     to: ['w', ['left_command', 'left_shift']],
   },
   COLUMN_SELECTION_MODE: {
@@ -134,7 +134,7 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: ['p', ['left_command', 'left_control', 'left_shift']],
   },
   GO_TO_DEFINITION_OR_USAGES: {
-    from: ['w', undefined, undefined],
+    from: 'w',
     to: ['b', 'left_command'],
   },
   GO_TO_TYPE_DECLARATION: {
@@ -146,11 +146,11 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: ['f12', 'left_option'],
   },
   MOVE_LINE_DOWN: {
-    from: ['k', 'left_command', undefined],
+    from: ['k', 'left_command'],
     to: ['down_arrow', ['left_option', 'left_shift']],
   },
   MOVE_LINE_UP: {
-    from: ['l', 'left_command', undefined],
+    from: ['l', 'left_command'],
     to: ['up_arrow', ['left_option', 'left_shift']],
   },
   NEW_DIRECTORY: {
@@ -166,15 +166,15 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: ['x', ['left_option', 'left_control']],
   },
   NEXT_ERROR: {
-    from: ['m', 'left_option', undefined],
+    from: ['m', 'left_option'],
     to: ['f2', []],
   },
   PREVIOUS_ERROR: {
-    from: ['n', 'left_option', undefined],
+    from: ['n', 'left_option'],
     to: ['f2', 'left_shift'],
   },
   RECENT_FILES: {
-    from: ['e', undefined, undefined],
+    from: 'e',
     to: ['e', ['left_option', 'left_command']],
     options: {
       disableVimMode: true,
@@ -186,11 +186,11 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: ['f6', 'left_shift'],
   },
   SCROLL_DOWN: {
-    from: ['k', 'left_option', undefined],
+    from: ['k', 'left_option'],
     to: ['k', ['left_command', 'left_shift']],
   },
   SCROLL_UP: {
-    from: ['l', 'left_option', undefined],
+    from: ['l', 'left_option'],
     to: ['i', ['left_command', 'left_shift']],
   },
   SEARCH_ACE_JUMP: {
@@ -199,12 +199,12 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     options: { disableVimMode: true },
   },
   SEARCH_ACE_JUMP_LINE: {
-    from: ['r', undefined, undefined],
+    from: 'r',
     to: ['f', ['left_control', 'left_option', 'left_command']],
     options: { disableVimMode: true },
   },
   SEARCH_ACE_JUMP_TARGET: {
-    from: ['g', undefined, undefined],
+    from: 'g',
     to: ['semicolon', ['left_option', 'left_command']],
     options: { disableVimMode: true },
   },
@@ -234,7 +234,7 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     options: { disableVimMode: true, returnToVimOnEnter: true },
   },
   SHOW_CONTEXT_MENU: {
-    from: ['z', undefined, undefined],
+    from: 'z',
     to: ['p', 'left_control'],
   },
   DELETE_LINE: {
@@ -242,11 +242,11 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: ['delete_or_backspace', 'left_command'],
   },
   NEXT_CHANGE: {
-    from: ['m', 'left_command', undefined],
+    from: ['m', 'left_command'],
     to: ['down_arrow', ['left_control', 'left_shift', 'left_option']],
   },
   PREVIOUS_CHANGE: {
-    from: ['n', 'left_command', undefined],
+    from: ['n', 'left_command'],
     to: ['up_arrow', ['left_control', 'left_shift', 'left_option']],
   },
   RERUN_LAST_TERMINAL_COMMAND: {
@@ -265,7 +265,7 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   },
   NEXT_USAGE: {
     from: 'caps_lock+k',
-    to: ['f7', undefined],
+    to: 'f7',
   },
   PREVIOUS_USAGE: {
     from: 'caps_lock+l',

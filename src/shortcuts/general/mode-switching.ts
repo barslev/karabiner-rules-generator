@@ -30,7 +30,7 @@ type ModeSwitchingShortcutsFromVisualModeKeys =
 export const ModeSwitchingFromNoModeShortcuts: Shortcuts<ModeSwitchingShortcutsFromNoModeKeys> =
   {
     SWITCH_FROM_NORMAL_MODE_TO_VIM_MODE: {
-      from: ['caps_lock', undefined, undefined],
+      from: 'caps_lock',
       to: (x) =>
         x
           .toIfAlone(setVimModeWithHalt)
@@ -47,35 +47,35 @@ export const ModeSwitchingFromNoModeShortcuts: Shortcuts<ModeSwitchingShortcutsF
 export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcutsFromVimModeKeys> =
   {
     SWITCH_FROM_VIM_TO_NORMAL_MODE: {
-      from: ['i', undefined, undefined],
+      from: 'i',
       to: (x) => x,
       options: {
         disableVimMode: true,
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_START_LINE: {
-      from: ['i', 'left_shift', undefined],
+      from: ['i', 'left_shift'],
       to: ['left_arrow', ['left_command']],
       options: {
         disableVimMode: true,
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_END_LINE: {
-      from: ['a', 'left_shift', undefined],
+      from: ['a', 'left_shift'],
       to: ['right_arrow', ['left_command']],
       options: {
         disableVimMode: true,
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_NEW_LINE_BELOW: {
-      from: ['o', undefined, undefined],
+      from: 'o',
       to: (x) => x.to('right_arrow', ['left_command']).to('return_or_enter'),
       options: {
         disableVimMode: true,
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_COMMA_AT_END_LINE_AND_NEW_LINE_BELOW: {
-      from: ['o', 'left_option', undefined],
+      from: ['o', 'left_option'],
       to: (x) =>
         x.to('right_arrow', ['left_command']).to('comma').to('return_or_enter'),
       options: {
@@ -83,7 +83,7 @@ export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcuts
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_NEW_LINE_ABOVE: {
-      from: ['o', 'left_shift', undefined],
+      from: ['o', 'left_shift'],
       to: (x) =>
         x
           .to('left_arrow', ['left_command'])
@@ -94,7 +94,7 @@ export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcuts
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_TARGET: {
-      from: ['i', 'left_option', undefined],
+      from: ['i', 'left_option'],
       to: (x) =>
         x
           .to('left_arrow', ['left_option'])
@@ -104,7 +104,7 @@ export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcuts
       },
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_WITH_TARGET_LINE: {
-      from: ['i', 'right_option', undefined],
+      from: ['i', 'right_option'],
       to: (x) =>
         x
           .to('left_arrow', ['left_command'])
@@ -114,7 +114,7 @@ export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcuts
       },
     },
     SWITCH_FROM_VIM_MODE_TO_VISUAL_MODE: {
-      from: ['v', undefined, undefined],
+      from: 'v',
       to: (x) =>
         x
           .to(toSetVar(VIM_MODE_VARIABLE, VISUAL_MODE))
@@ -125,7 +125,7 @@ export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcuts
 export const ModeSwitchingFromVisualModeShortcuts: Shortcuts<ModeSwitchingShortcutsFromVisualModeKeys> =
   {
     SWITCH_FROM_VISUAL_MODE_TO_VIM_MODE: {
-      from: ['v', undefined, undefined],
+      from: 'v',
       to: (x) => x,
       options: {
         enableVimMode: true,

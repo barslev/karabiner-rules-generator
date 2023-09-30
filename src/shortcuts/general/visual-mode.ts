@@ -15,50 +15,50 @@ type VisualModeShortcutsKeys =
 
 export const VisualModeShortcuts: Shortcuts<VisualModeShortcutsKeys> = {
   NAVIGATE_LEFT: {
-    from: ['j', undefined, undefined],
+    from: 'j',
     to: ['left_arrow', ['left_shift']],
   },
   NAVIGATE_DOWN: {
-    from: ['k', undefined, undefined],
+    from: 'k',
     to: ['down_arrow', ['left_shift']],
   },
   NAVIGATE_UP: {
-    from: ['l', undefined, undefined],
+    from: 'l',
     to: ['up_arrow', ['left_shift']],
   },
   NAVIGATE_RIGHT: {
-    from: ['semicolon', undefined, undefined],
+    from: 'semicolon',
     to: ['right_arrow', ['left_shift']],
   },
   NAVIGATE_WORD_START: {
-    from: ['s', undefined, undefined],
+    from: 's',
     to: ['left_arrow', ['left_shift', 'left_option']],
   },
   NAVIGATE_WORD_END: {
-    from: ['f', undefined, undefined],
+    from: 'f',
     to: ['right_arrow', ['left_shift', 'left_option']],
   },
   NAVIGATE_LINE_START: {
-    from: ['s', 'left_option', undefined],
+    from: ['s', 'left_option'],
     to: ['left_arrow', ['left_shift', 'left_command']],
   },
   NAVIGATE_LINE_END: {
-    from: ['f', 'left_option', undefined],
+    from: ['f', 'left_option'],
     to: ['right_arrow', ['left_shift', 'left_command']],
   },
   COPY_SELECTION: {
-    from: ['y', undefined, undefined],
+    from: 'y',
     to: ['c', ['left_command']],
     options: { enableVimMode: true },
   },
   CUT_SELECTION: {
-    from: ['c', undefined, undefined],
+    from: 'c',
     to: ['x', ['left_command']],
     options: { enableVimMode: true },
   },
   DELETE_SELECTION: {
-    from: ['d', undefined, undefined],
-    to: ['delete_or_backspace', undefined],
+    from: 'd',
+    to: 'delete_or_backspace',
     options: { enableVimMode: true },
   },
 };

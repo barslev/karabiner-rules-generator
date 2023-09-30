@@ -78,11 +78,11 @@ export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
         .to('x', ['left_command']),
   },
   DELETE_CHARACTER_FORWARD: {
-    from: ['h', undefined, undefined],
+    from: 'h',
     to: ['delete_forward', undefined],
   },
   DELETE_CHARACTER_BACKWARD: {
-    from: ['h', ['left_command'], undefined],
+    from: ['h', ['left_command']],
     to: ['delete_or_backspace', undefined],
   },
   COPY_LINE: {
@@ -122,7 +122,7 @@ export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
         .to('c', ['left_command']),
   },
   COPY_SELECTION: {
-    from: ['c', undefined, undefined],
+    from: 'c',
     to: ['c', ['left_command']],
   },
   CUT_LINE: {
@@ -162,98 +162,110 @@ export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
         .to('x', ['left_command']),
   },
   PASTE: {
-    from: ['p', undefined, undefined],
+    from: 'p',
     to: ['v', ['left_command']],
   },
   UNDO: {
-    from: ['u', undefined, undefined],
+    from: 'u',
     to: ['z', ['left_command']],
   },
   REDO: {
-    from: ['u', ['left_command'], undefined],
+    from: ['u', ['left_command']],
     to: ['z', ['left_shift', 'left_command']],
   },
   NAVIGATE_LEFT: {
-    from: ['j', undefined, ['control', 'option', 'command', 'shift']],
+    from: 'j',
     to: ['left_arrow', undefined],
+    options: {
+      optionalModifiers: ['control', 'option', 'command', 'shift'],
+    },
   },
   NAVIGATE_DOWN: {
-    from: ['k', undefined, ['control', 'option', 'command', 'shift']],
+    from: 'k',
     to: ['down_arrow', undefined],
+    options: {
+      optionalModifiers: ['control', 'option', 'command', 'shift'],
+    },
   },
   NAVIGATE_UP: {
-    from: ['l', undefined, ['control', 'option', 'command', 'shift']],
+    from: 'l',
     to: ['up_arrow', undefined],
+    options: {
+      optionalModifiers: ['control', 'option', 'command', 'shift'],
+    },
   },
   NAVIGATE_RIGHT: {
-    from: ['semicolon', undefined, ['control', 'option', 'command', 'shift']],
+    from: 'semicolon',
     to: ['right_arrow', undefined],
+    options: {
+      optionalModifiers: ['control', 'option', 'command', 'shift'],
+    },
   },
   NAVIGATE_WORD_START: {
-    from: ['s', undefined, undefined],
+    from: 's',
     to: ['left_arrow', ['left_option']],
   },
   NAVIGATE_WORD_END: {
-    from: ['f', undefined, undefined],
+    from: 'f',
     to: ['right_arrow', ['left_option']],
   },
   NAVIGATE_LINE_START: {
-    from: ['s', 'left_option', undefined],
+    from: ['s', 'left_option'],
     to: ['left_arrow', ['left_command']],
   },
   NAVIGATE_LINE_END: {
-    from: ['f', 'left_option', undefined],
+    from: ['f', 'left_option'],
     to: ['right_arrow', ['left_command']],
   },
   NAVIGATE_PAGE_TOP: {
-    from: ['s', 'right_option', undefined],
+    from: ['s', 'right_option'],
     to: ['left_arrow', ['fn', 'left_command']],
   },
   NAVIGATE_PAGE_BOTTOM: {
-    from: ['f', 'right_option', undefined],
+    from: ['f', 'right_option'],
     to: ['right_arrow', ['fn', 'left_command']],
   },
   COMMAND_V: {
-    from: ['v', 'left_command', undefined],
+    from: ['v', 'left_command'],
     to: ['v', ['left_command']],
   },
   COMMAND_C: {
-    from: ['c', 'left_command', undefined],
+    from: ['c', 'left_command'],
     to: ['c', ['left_command']],
   },
   COMMAND_Z: {
-    from: ['z', 'left_command', undefined],
+    from: ['z', 'left_command'],
     to: ['z', ['left_command']],
   },
   COMMAND_SHIFT_Z: {
-    from: ['z', ['left_shift', 'left_command'], undefined],
+    from: ['z', ['left_shift', 'left_command']],
     to: ['z', ['left_shift', 'left_command']],
   },
   COMMAND_F: {
-    from: ['f', 'left_command', undefined],
+    from: ['f', 'left_command'],
     to: ['f', ['left_command']],
     options: { disableVimMode: true },
   },
   COMMAND_A: {
-    from: ['a', 'left_command', undefined],
+    from: ['a', 'left_command'],
     to: ['a', ['left_command']],
   },
   COMMAND_I: {
-    from: ['i', 'left_command', undefined],
+    from: ['i', 'left_command'],
     to: ['i', ['left_command']],
     options: { disableVimMode: true },
   },
   COMMAND_R: {
-    from: ['r', 'left_command', undefined],
+    from: ['r', 'left_command'],
     to: ['r', ['left_command']],
     options: { disableVimMode: true },
   },
   ESCAPE: {
-    from: ['grave_accent_and_tilde', undefined, undefined],
-    to: ['escape', undefined],
+    from: 'grave_accent_and_tilde',
+    to: 'escape',
   },
   RETURN_OR_ENTER: {
-    from: ['slash', undefined, undefined],
-    to: ['return_or_enter', undefined],
+    from: 'slash',
+    to: 'return_or_enter',
   },
 };

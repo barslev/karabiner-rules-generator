@@ -74,6 +74,7 @@ export class ClickHelper {
 
   setupBasic(
     from:
+      | [FromKeyCode, ModifierParam | undefined]
       | [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined]
       | FromKeyCode,
     to:
@@ -82,7 +83,9 @@ export class ClickHelper {
       | ((x: ManipulatorBuilder) => ManipulatorBuilder),
     options?: Options,
   ): void {
-    const fromManipulator = Array.isArray(from) ? map(...from) : map(from);
+    const fromManipulator = Array.isArray(from)
+      ? map(from[0], from[1], options?.optionalModifiers)
+      : map(from);
     const toEvent =
       typeof to === 'function'
         ? to(fromManipulator)
@@ -120,10 +123,10 @@ export class ClickHelper {
           this.setupBasic(shortcut.from, shortcut.to, shortcut.options);
         else {
           const toHandler = (x: ManipulatorBuilder) => {
-            let res =
-              typeof shortcut.to === 'function'
-                ? shortcut.to(x)
-                : x.to(...shortcut.to);
+            let res;
+            if (typeof shortcut.to === 'function') res = shortcut.to(x);
+            else if (Array.isArray(shortcut.to)) res = x.to(...shortcut.to);
+            else res = x.to(shortcut.to);
             res = applyOptions(shortcut.options, res);
             return res;
           };
@@ -141,7 +144,13 @@ export class ClickHelper {
               key2 as FromKeyParam,
               toHandler,
             );
-          } else throw new Error('Not supported yet');
+          } else {
+            this.setupBasic(
+              shortcut.from as FromKeyCode,
+              shortcut.to,
+              shortcut.options,
+            );
+          }
         }
       });
   }

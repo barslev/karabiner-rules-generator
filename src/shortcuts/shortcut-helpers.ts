@@ -6,12 +6,11 @@ export type Options = {
   disableVimMode?: boolean;
   enableVimMode?: boolean;
   returnToVimOnEnter?: boolean;
+  optionalModifiers?: ModifierParam;
 };
 export type ShortcutDescriptor = {
-  from:
-    | [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined]
-    | string;
-  to: ToKey | ((x: ManipulatorBuilder) => ManipulatorBuilder);
+  from: [FromKeyCode, ModifierParam | undefined] | string;
+  to: ToKeyParam | ToKey | ((x: ManipulatorBuilder) => ManipulatorBuilder);
   options?: Options;
 };
 export type Shortcuts<T extends string> = Record<T, ShortcutDescriptor>;
