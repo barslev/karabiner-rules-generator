@@ -1,12 +1,4 @@
-import {
-  FromKeyCode,
-  FromKeyParam,
-  ifVar,
-  map,
-  ModifierParam,
-  ToKeyParam,
-  toSetVar,
-} from 'karabiner.ts';
+import { FromKeyCode, FromKeyParam, ifVar, map, toSetVar } from 'karabiner.ts';
 import {
   Options,
   ShortcutDescriptor,
@@ -72,29 +64,6 @@ export class ClickHelper {
     );
   }
 
-  setupBasic(
-    from:
-      | [FromKeyCode, ModifierParam | undefined]
-      | [FromKeyCode, ModifierParam | undefined, ModifierParam | undefined]
-      | FromKeyCode,
-    to:
-      | [ToKeyParam, ModifierParam | undefined]
-      | ToKeyParam
-      | ((x: ManipulatorBuilder) => ManipulatorBuilder),
-    options?: Options,
-  ): void {
-    const fromManipulator = Array.isArray(from)
-      ? map(from[0], from[1], options?.optionalModifiers)
-      : map(from);
-    const toEvent =
-      typeof to === 'function'
-        ? to(fromManipulator)
-        : Array.isArray(to)
-        ? fromManipulator.to(...to)
-        : fromManipulator.to(to);
-    this.singleKeyManipulators.push(applyOptions(options, toEvent));
-  }
-
   getSecondKeyManipulators() {
     return this.secondKeyManipulators;
   }
@@ -116,43 +85,40 @@ export class ClickHelper {
   }
 
   registerShortcuts<T extends string>(shortcuts: Shortcuts<T>) {
-    Object.values<ShortcutDescriptor>(shortcuts)
-      .filter((shortcut) => shortcut.from[0])
-      .flatMap((shortcut) => {
-        if (Array.isArray(shortcut.from))
-          this.setupBasic(shortcut.from, shortcut.to, shortcut.options);
-        else {
-          const toHandler = (x: ManipulatorBuilder) => {
-            let res;
-            if (typeof shortcut.to === 'function') res = shortcut.to(x);
-            else if (Array.isArray(shortcut.to)) res = x.to(...shortcut.to);
-            else res = x.to(shortcut.to);
-            res = applyOptions(shortcut.options, res);
-            return res;
-          };
-          if (shortcut.from.includes(',')) {
-            const [key1, key2] = shortcut.from.split(',');
-            this.registerTwoClickSequence(
-              key1 as FromKeyParam,
-              key2 as FromKeyParam,
-              toHandler,
-            );
-          } else if (shortcut.from.includes('+')) {
-            const [key1, key2] = shortcut.from.split('+');
-            this.registerSecondKeyPressedWhileFirstHeldDown(
-              key1 as FromKeyParam,
-              key2 as FromKeyParam,
-              toHandler,
-            );
-          } else {
-            this.setupBasic(
-              shortcut.from as FromKeyCode,
-              shortcut.to,
-              shortcut.options,
-            );
-          }
+    Object.values<ShortcutDescriptor>(shortcuts).flatMap(
+      ({ from, to, options }) => {
+        const toHandler = (x: ManipulatorBuilder) => {
+          let res;
+          if (typeof to === 'function') res = to(x);
+          else if (Array.isArray(to)) res = x.to(...to);
+          else res = x.to(to);
+          res = applyOptions(options, res);
+          return res;
+        };
+        if (typeof from === 'string' && from.includes(',')) {
+          const [key1, key2] = from.split(',');
+          this.registerTwoClickSequence(
+            key1 as FromKeyParam,
+            key2 as FromKeyParam,
+            toHandler,
+          );
+        } else if (typeof from === 'string' && from.includes('+')) {
+          const [key1, key2] = from.split('+');
+          this.registerSecondKeyPressedWhileFirstHeldDown(
+            key1 as FromKeyParam,
+            key2 as FromKeyParam,
+            toHandler,
+          );
+        } else {
+          const fromManipulator = Array.isArray(from)
+            ? map(from[0], from[1], options?.optionalModifiers)
+            : map(from as FromKeyCode);
+          this.singleKeyManipulators.push(
+            applyOptions(options, toHandler(fromManipulator)),
+          );
         }
-      });
+      },
+    );
   }
 
   getDisableOtherSecondKeysRule() {
