@@ -31,7 +31,8 @@ export type AppSwitchingShortcutsKeys =
   | 'TERMINAL'
   | 'VSCODE'
   | 'KARABINER_ELEMENTS'
-  | 'KARABINER_EVENT_VIEWER';
+  | 'KARABINER_EVENT_VIEWER'
+  | 'TEX_SHOP';
 
 // TODO: The following 4 is not implemented yet
 // addSecondClick2(APPLICATION_SWITCHER_KEY, 'f', { shell_command: "open /Users/benjaminbarslevnielsen/Documents/git/jsfixinc"}, vimModeOptions, undefined, getToKeyPress(['w', 'left_command'])),
@@ -70,6 +71,7 @@ export const appSwitchingShortcuts: Record<
   VSCODE: [APP_SWITCHING_KEY, 'v'],
   KARABINER_ELEMENTS: [APP_SWITCHING_KEY, 'w'],
   KARABINER_EVENT_VIEWER: [APP_SWITCHING_KEY, 'e'],
+  TEX_SHOP: [APP_SWITCHING_KEY, 'x'],
 };
 
 export type OtherStandardShortcuts =

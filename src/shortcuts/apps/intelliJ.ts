@@ -42,6 +42,9 @@ type IntelliJShortcutsKeys =
   | 'GIT_PULL'
   | 'GIT_NEW_BRANCH'
   | 'GIT_OPEN_ON_GITHUB'
+  | 'GIT_ROLL_BACK'
+  | 'GIT_STASH'
+  | 'GIT_UNSTASH'
   | 'EXPAND_BLOCK_SELECTION'
   | 'DECREASE_BLOCK_SELECTION'
   | 'DELETE_LINE'
@@ -66,7 +69,7 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
     to: ['w', 'left_command'],
   },
   DECREASE_BLOCK_SELECTION: {
-    from: ['comma', 'left_option'],
+    from: ['comma', 'left_command'],
     to: ['w', ['left_command', 'left_shift']],
   },
   COLUMN_SELECTION_MODE: {
@@ -132,6 +135,18 @@ export const intelliJShortcuts: Shortcuts<IntelliJShortcutsKeys> = {
   GIT_PUSH: {
     from: 'period,l',
     to: ['p', ['left_command', 'left_control', 'left_shift']],
+  },
+  GIT_ROLL_BACK: {
+    from: 'period,r',
+    to: ['z', ['left_command', 'left_option']],
+  },
+  GIT_STASH: {
+    from: 'period,s',
+    to: ['s', ['left_control']],
+  },
+  GIT_UNSTASH: {
+    from: 'period,u',
+    to: ['s', ['left_control', 'left_shift']],
   },
   GO_TO_DEFINITION_OR_USAGES: {
     from: 'w',

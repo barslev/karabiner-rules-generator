@@ -19,6 +19,7 @@ const Apps = {
   VSCODE: 'Visual Studio Code.app',
   KARABINER_ELEMENTS: 'Karabiner-Elements.app',
   KARABINER_EVENT_VIEWER: 'Karabiner-EventViewer.app',
+  TEX_SHOP: 'TeXShop.app',
 };
 
 const configsForApps: Record<
@@ -114,6 +115,7 @@ const configsForApps: Record<
   VSCODE: { app: Apps.VSCODE },
   KARABINER_ELEMENTS: { app: Apps.KARABINER_ELEMENTS },
   KARABINER_EVENT_VIEWER: { app: Apps.KARABINER_EVENT_VIEWER },
+  TEX_SHOP: { app: Apps.TEX_SHOP },
 };
 export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
   clickHelperWrapper.startRule('App switching commands', [ifVimModeEnabled]);
