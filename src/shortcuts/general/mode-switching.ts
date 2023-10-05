@@ -15,6 +15,7 @@ type ModeSwitchingShortcutsFromNoModeKeys =
 
 type ModeSwitchingShortcutsFromVimModeKeys =
   | 'SWITCH_FROM_VIM_TO_NORMAL_MODE'
+  | 'SWITCH_FROM_VIM_TO_NORMAL_MODE_TEMPORARILY'
   | 'SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_START_LINE'
   | 'SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_END_LINE'
   | 'SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_NEW_LINE_BELOW'
@@ -52,6 +53,18 @@ export const ModeSwitchingFromVimModeShortcuts: Shortcuts<ModeSwitchingShortcuts
       options: {
         disableVimMode: true,
       },
+    },
+    SWITCH_FROM_VIM_TO_NORMAL_MODE_TEMPORARILY: {
+      from: 'tab',
+      to: (x) =>
+        x
+          .toIfHeldDown(toSetVar(VIM_MODE_VARIABLE, NO_MODE))
+          .toIfHeldDown(toNotificationMessage(vimNotificationKey, ''))
+          .toAfterKeyUp(toSetVar(VIM_MODE_VARIABLE, VIM_MODE))
+          .toAfterKeyUp(setModeToVimNotificationToEvent)
+          .parameters({
+            'basic.to_if_held_down_threshold_milliseconds': 50,
+          }),
     },
     SWITCH_FROM_VIM_TO_NORMAL_MODE_AT_START_LINE: {
       from: ['i', 'left_shift'],
