@@ -2,9 +2,12 @@ import {
   appSwitchingShortcuts,
   AppSwitchingShortcutsKeys,
   otherStandardShortcuts,
+  tabSwitchingShortcuts,
+  TabSwitchingShortcutsKeys,
 } from '../../shortcuts/general/app-switching';
 import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
 import { ifVimModeEnabled } from '../rules-helpers';
+import { runKeyboardMaestro } from '../../lib-extensions/utils';
 
 const Apps = {
   INTELLIJ: 'IntelliJ IDEA.app',
@@ -68,56 +71,6 @@ const configsForApps: Record<
     ],
   },
   CHROME: { app: Apps.CHROME },
-  CHROME_RECIPES: {
-    app: Apps.CHROME,
-    args: ['https://coda.io/d/Madplan_d5UhBaAzvau/Opskrifter_suW-U#_lu_Pq'],
-  },
-  CHROME_ADD_TO_SHOPPING_LIST: {
-    app: Apps.CHROME,
-    args: [
-      'https://coda.io/d/Madplan_d5UhBaAzvau/Tilf-j-til-indk-bsliste_suzMA#_luAoi',
-    ],
-  },
-  CHROME_SHOPPING_LIST: {
-    app: Apps.CHROME,
-    args: ['https://coda.io/d/Madplan_d5UhBaAzvau/Indk-bsliste_sumoG#_luEV5'],
-  },
-  CHROME_GMAIL_PERSONAL: {
-    app: Apps.CHROME,
-    args: ['https://mail.google.com/mail/u/0/#inbox'],
-  },
-  CHROME_GMAIL_WORK: {
-    app: Apps.CHROME,
-    args: ['https://mail.google.com/mail/u/1/#inbox'],
-  },
-  CHROME_GITHUB_COANA_PACKAGE_MANAGER: {
-    app: Apps.CHROME,
-    args: ['https://github.com/coana-tech/coana-package-manager'],
-  },
-  CHROME_GITHUB_COANA_PACKAGE_MANAGER_PULLS: {
-    app: Apps.CHROME,
-    args: ['https://github.com/coana-tech/coana-package-manager/pulls'],
-  },
-  CHROME_GITHUB_JELLY: {
-    app: Apps.CHROME,
-    args: ['https://github.com/coana-tech/jelly'],
-  },
-  CHROME_NAVIGATION: {
-    app: Apps.CHROME,
-    args: ['https://www.google.dk/maps/dir/Musv%C3%A5gevej+18,+Aarhus'],
-  },
-  CHROME_GQUEUES_INBOX: {
-    app: Apps.CHROME,
-    args: ['https://app.gqueues.com/main/inbox'],
-  },
-  CHROME_ARGO: {
-    app: Apps.CHROME,
-    args: ['https://argocd.coana.tech'],
-  },
-  CHROME_TRELLO: {
-    app: Apps.CHROME,
-    args: ['https://trello.com/b/nR3yPO4q/tasks'],
-  },
   ONENOTE: { app: Apps.ONENOTE },
   NOTION: { app: Apps.NOTION },
   LINEAR: { app: Apps.LINEAR },
@@ -136,6 +89,9 @@ export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
   (Object.keys(configsForApps) as AppSwitchingShortcutsKeys[]).forEach(
     (appSwitchingKey) => openApp(appSwitchingKey),
   );
+  (Object.keys(tabSwitchingShortcuts) as TabSwitchingShortcutsKeys[]).forEach(
+    (tabSwitchingKey) => openTab(tabSwitchingKey),
+  );
   clickHelperWrapper.registerShortcuts(otherStandardShortcuts);
 
   function openApp(appSwitchingKey: AppSwitchingShortcutsKeys) {
@@ -147,6 +103,19 @@ export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
           `open -${config.args ? 'n' : ''}a '${config.app}' ${
             !config.args ? '' : `--args ${config.args}`
           }`,
+        ),
+    );
+  }
+
+  function openTab(tabSwitchingKey: TabSwitchingShortcutsKeys) {
+    const shortcutDescriptor = tabSwitchingShortcuts[tabSwitchingKey];
+    clickHelperWrapper.registerTwoClickSequence(
+      ...shortcutDescriptor.from,
+      (x) =>
+        runKeyboardMaestro(
+          x,
+          'Switch to given tab if exists or open new',
+          shortcutDescriptor.url,
         ),
     );
   }

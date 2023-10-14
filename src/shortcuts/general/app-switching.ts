@@ -1,5 +1,5 @@
 import { FromKeyParam, toKey, toTypeSequence } from 'karabiner.ts';
-import { Shortcuts } from '../shortcut-helpers';
+import { Options, Shortcuts } from '../shortcut-helpers';
 
 const APP_SWITCHING_KEY = 'd';
 const TAB_SWITCHING_KEY = 'c';
@@ -13,18 +13,6 @@ export type AppSwitchingShortcutsKeys =
   | 'INTELLIJ_HELM_CHARTS'
   | 'INTELLIJ_JELLY'
   | 'CHROME'
-  | 'CHROME_RECIPES'
-  | 'CHROME_ADD_TO_SHOPPING_LIST'
-  | 'CHROME_SHOPPING_LIST'
-  | 'CHROME_GMAIL_PERSONAL'
-  | 'CHROME_GMAIL_WORK'
-  | 'CHROME_GITHUB_COANA_PACKAGE_MANAGER'
-  | 'CHROME_GITHUB_COANA_PACKAGE_MANAGER_PULLS'
-  | 'CHROME_GITHUB_JELLY'
-  | 'CHROME_NAVIGATION'
-  | 'CHROME_GQUEUES_INBOX'
-  | 'CHROME_ARGO'
-  | 'CHROME_TRELLO'
   | 'ONENOTE'
   | 'NOTION'
   | 'LINEAR'
@@ -55,19 +43,6 @@ export const appSwitchingShortcuts: Record<
   INTELLIJ_HELM_CHARTS: [APP_SWITCHING_KEY, 'h'],
   INTELLIJ_JELLY: [APP_SWITCHING_KEY, 'j'],
   CHROME: [APP_SWITCHING_KEY, 'c'],
-  CHROME_RECIPES: [TAB_SWITCHING_KEY, 'o'],
-  CHROME_ADD_TO_SHOPPING_LIST: [TAB_SWITCHING_KEY, 't'],
-  CHROME_SHOPPING_LIST: [TAB_SWITCHING_KEY, 'i'],
-  CHROME_GMAIL_PERSONAL: [TAB_SWITCHING_KEY, 'g'],
-  CHROME_GMAIL_WORK: [TAB_SWITCHING_KEY, 'h'],
-  CHROME_GITHUB_COANA_PACKAGE_MANAGER: [TAB_SWITCHING_KEY, 'c'],
-  CHROME_GITHUB_COANA_PACKAGE_MANAGER_PULLS: [TAB_SWITCHING_KEY, 'p'],
-  CHROME_GITHUB_JELLY: [TAB_SWITCHING_KEY, 'j'],
-  CHROME_NAVIGATION: [TAB_SWITCHING_KEY, 'n'],
-
-  CHROME_GQUEUES_INBOX: [TAB_SWITCHING_KEY, 'q'],
-  CHROME_ARGO: [TAB_SWITCHING_KEY, 'a'],
-  CHROME_TRELLO: [TAB_SWITCHING_KEY, 'r'],
   ONENOTE: [APP_SWITCHING_KEY, 'o'],
   NOTION: [APP_SWITCHING_KEY, 'n'],
   LINEAR: [APP_SWITCHING_KEY, 'l'],
@@ -80,6 +55,83 @@ export const appSwitchingShortcuts: Record<
   KARABINER_ELEMENTS: [APP_SWITCHING_KEY, 'w'],
   KARABINER_EVENT_VIEWER: [APP_SWITCHING_KEY, 'e'],
   TEX_SHOP: [APP_SWITCHING_KEY, 'x'],
+};
+
+export type TabSwitchingShortcutsKeys =
+  | 'CHROME_RECIPES'
+  | 'CHROME_ADD_TO_SHOPPING_LIST'
+  | 'CHROME_SHOPPING_LIST'
+  | 'CHROME_CALENDAR'
+  | 'CHROME_GMAIL_PERSONAL'
+  | 'CHROME_GMAIL_WORK'
+  | 'CHROME_GITHUB_COANA_PACKAGE_MANAGER'
+  | 'CHROME_GITHUB_COANA_PACKAGE_MANAGER_PULLS'
+  | 'CHROME_GITHUB_JELLY'
+  | 'CHROME_NAVIGATION'
+  | 'CHROME_GQUEUES_INBOX'
+  | 'CHROME_ARGO'
+  | 'CHROME_TRELLO';
+
+export const tabSwitchingShortcuts: Record<
+  TabSwitchingShortcutsKeys,
+  {
+    from: [FromKeyParam, FromKeyParam];
+    url: string;
+    options?: Partial<Options>;
+  }
+> = {
+  CHROME_RECIPES: {
+    from: [TAB_SWITCHING_KEY, 'o'],
+    url: 'https://coda.io/d/Madplan_d5UhBaAzvau/Opskrifter_suW-U#_lu_Pq',
+  },
+  CHROME_ADD_TO_SHOPPING_LIST: {
+    from: [TAB_SWITCHING_KEY, 't'],
+    url: 'https://coda.io/d/Madplan_d5UhBaAzvau/Tilf-j-til-indk-bsliste_suzMA#_luAoi',
+  },
+  CHROME_SHOPPING_LIST: {
+    from: [TAB_SWITCHING_KEY, 'i'],
+    url: 'https://coda.io/d/Madplan_d5UhBaAzvau/Indk-bsliste_sumoG#_luEV5',
+  },
+  CHROME_GMAIL_PERSONAL: {
+    from: [TAB_SWITCHING_KEY, 'g'],
+    url: 'https://mail.google.com/mail/u/0/#inbox',
+  },
+  CHROME_GMAIL_WORK: {
+    from: [TAB_SWITCHING_KEY, 'h'],
+    url: 'https://mail.google.com/mail/u/1/#inbox',
+  },
+  CHROME_CALENDAR: {
+    from: [TAB_SWITCHING_KEY, 'l'],
+    url: 'https://calendar.google.com/calendar/u/1',
+  },
+  CHROME_GITHUB_COANA_PACKAGE_MANAGER: {
+    from: [TAB_SWITCHING_KEY, 'c'],
+    url: 'https://github.com/coana-tech/coana-package-manager',
+  },
+  CHROME_GITHUB_COANA_PACKAGE_MANAGER_PULLS: {
+    from: [TAB_SWITCHING_KEY, 'p'],
+    url: 'https://github.com/coana-tech/coana-package-manager/pulls',
+  },
+  CHROME_GITHUB_JELLY: {
+    from: [TAB_SWITCHING_KEY, 'j'],
+    url: 'https://github.com/coana-tech/jelly',
+  },
+  CHROME_NAVIGATION: {
+    from: [TAB_SWITCHING_KEY, 'n'],
+    url: 'https://www.google.dk/maps/dir/Musv%C3%A5gevej+18,+Aarhus',
+  },
+  CHROME_GQUEUES_INBOX: {
+    from: [TAB_SWITCHING_KEY, 'q'],
+    url: 'https://app.gqueues.com/main/inbox',
+  },
+  CHROME_ARGO: {
+    from: [TAB_SWITCHING_KEY, 'a'],
+    url: 'https://argocd.coana.tech',
+  },
+  CHROME_TRELLO: {
+    from: [TAB_SWITCHING_KEY, 'r'],
+    url: 'https://trello.com/b/nR3yPO4q/tasks',
+  },
 };
 
 export type OtherStandardShortcuts =
