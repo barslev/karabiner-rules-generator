@@ -14,6 +14,7 @@ const Apps = {
   LINEAR: 'Linear.app',
   FIREFOX: 'Firefox.app',
   KEYNOTE: 'KeyNote.app',
+  KEYBOARD_MAESTRO: 'Keyboard Maestro.app',
   SLACK: 'Slack.app',
   TERMINAL: 'Terminal.app',
   VSCODE: 'Visual Studio Code.app',
@@ -55,6 +56,10 @@ const configsForApps: Record<
     args: [
       '/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-package-manager-3',
     ],
+  },
+  INTELLIJ_HELM_CHARTS: {
+    app: Apps.INTELLIJ,
+    args: ['/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/helm-charts'],
   },
   INTELLIJ_JELLY: {
     app: Apps.INTELLIJ,
@@ -105,11 +110,20 @@ const configsForApps: Record<
     app: Apps.CHROME,
     args: ['https://app.gqueues.com/main/inbox'],
   },
+  CHROME_ARGO: {
+    app: Apps.CHROME,
+    args: ['https://argocd.coana.tech'],
+  },
+  CHROME_TRELLO: {
+    app: Apps.CHROME,
+    args: ['https://trello.com/b/nR3yPO4q/tasks'],
+  },
   ONENOTE: { app: Apps.ONENOTE },
   NOTION: { app: Apps.NOTION },
   LINEAR: { app: Apps.LINEAR },
   FIREFOX: { app: Apps.FIREFOX },
   KEYNOTE: { app: Apps.KEYNOTE },
+  KEYBOARD_MAESTRO: { app: Apps.KEYBOARD_MAESTRO },
   SLACK: { app: Apps.SLACK },
   TERMINAL: { app: Apps.TERMINAL },
   VSCODE: { app: Apps.VSCODE },

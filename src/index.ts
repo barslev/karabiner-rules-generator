@@ -5,9 +5,19 @@ import { registerRules as registerAppSwitchingRules } from './rules/general/app-
 import { registerRules as registerVimModeRules } from './rules/general/vim-mode';
 import { registerRules as registerVisualModeRules } from './rules/general/visual-mode';
 import { registerRules as registerUnusedKeysInSpecialModeRules } from './rules/general/disable-unused-keys-in-special-modes';
+import { registerRules as registerOtherCommandsRules } from './rules/general/other-commands';
 import { ClickHelperWrapper } from './lib-extensions/click-helper-wrapper';
+import { rule } from 'karabiner.ts';
+import { setupReturnToEnterVimMode } from './rules/rules-helpers';
 
 const clickHelperWrapper = new ClickHelperWrapper();
+
+clickHelperWrapper.addRule(
+  rule('Setup return to enter vim mode').manipulators([
+    setupReturnToEnterVimMode(),
+  ]),
+);
+
 [
   registerAppSwitchingRules,
   registerIntelliJRules,

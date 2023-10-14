@@ -17,6 +17,7 @@ type ShortcutsKeys =
   | 'MOVE_TAB_TO_NEW_WINDOW'
   | 'OPEN_CLIPBOARD_URL_IN_CURRENT_TAB'
   | 'OPEN_CLIPBOARD_URL_IN_NEW_TAB'
+  | 'OPEN_LAST_CLOSED_TAB'
   | 'SEARCH_WEBPAGE'
   | 'RELOAD_WEBPAGE';
 
@@ -66,6 +67,10 @@ export const chromeShortcuts: Shortcuts<ShortcutsKeys> = {
   OPEN_CLIPBOARD_URL_IN_NEW_TAB: {
     from: 'd',
     to: ['p', { left: 'shift' }],
+  },
+  OPEN_LAST_CLOSED_TAB: {
+    from: 'o',
+    to: ['t', ['left_command', 'left_shift']],
   },
   RELOAD_WEBPAGE: {
     from: 'r',

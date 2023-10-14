@@ -46,7 +46,9 @@ type VimModeShortcutsKeys =
   | 'COMMAND_I'
   | 'COMMAND_R'
   | 'ESCAPE'
-  | 'RETURN_OR_ENTER';
+  | 'RETURN_OR_ENTER'
+  // OTHER
+  | 'QUIT';
 
 export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
   DELETE_WORD_START: {
@@ -267,5 +269,9 @@ export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
   RETURN_OR_ENTER: {
     from: 'slash',
     to: 'return_or_enter',
+  },
+  QUIT: {
+    from: 'q',
+    to: ['q', 'left_command'],
   },
 };

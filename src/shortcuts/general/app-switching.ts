@@ -10,6 +10,7 @@ export type AppSwitchingShortcutsKeys =
   | 'INTELLIJ_COANA_PACKAGE_MANAGER_1'
   | 'INTELLIJ_COANA_PACKAGE_MANAGER_2'
   | 'INTELLIJ_COANA_PACKAGE_MANAGER_3'
+  | 'INTELLIJ_HELM_CHARTS'
   | 'INTELLIJ_JELLY'
   | 'CHROME'
   | 'CHROME_RECIPES'
@@ -22,11 +23,14 @@ export type AppSwitchingShortcutsKeys =
   | 'CHROME_GITHUB_JELLY'
   | 'CHROME_NAVIGATION'
   | 'CHROME_GQUEUES_INBOX'
+  | 'CHROME_ARGO'
+  | 'CHROME_TRELLO'
   | 'ONENOTE'
   | 'NOTION'
   | 'LINEAR'
   | 'FIREFOX'
   | 'KEYNOTE'
+  | 'KEYBOARD_MAESTRO'
   | 'SLACK'
   | 'TERMINAL'
   | 'VSCODE'
@@ -48,6 +52,7 @@ export const appSwitchingShortcuts: Record<
   INTELLIJ_COANA_PACKAGE_MANAGER_1: [APP_SWITCHING_KEY, 'i'],
   INTELLIJ_COANA_PACKAGE_MANAGER_2: [APP_SWITCHING_KEY, 'semicolon'],
   INTELLIJ_COANA_PACKAGE_MANAGER_3: [APP_SWITCHING_KEY, 'quote'],
+  INTELLIJ_HELM_CHARTS: [APP_SWITCHING_KEY, 'h'],
   INTELLIJ_JELLY: [APP_SWITCHING_KEY, 'j'],
   CHROME: [APP_SWITCHING_KEY, 'c'],
   CHROME_RECIPES: [TAB_SWITCHING_KEY, 'o'],
@@ -61,11 +66,14 @@ export const appSwitchingShortcuts: Record<
   CHROME_NAVIGATION: [TAB_SWITCHING_KEY, 'n'],
 
   CHROME_GQUEUES_INBOX: [TAB_SWITCHING_KEY, 'q'],
+  CHROME_ARGO: [TAB_SWITCHING_KEY, 'a'],
+  CHROME_TRELLO: [TAB_SWITCHING_KEY, 'r'],
   ONENOTE: [APP_SWITCHING_KEY, 'o'],
   NOTION: [APP_SWITCHING_KEY, 'n'],
   LINEAR: [APP_SWITCHING_KEY, 'l'],
   FIREFOX: [APP_SWITCHING_KEY, 'g'],
   KEYNOTE: [APP_SWITCHING_KEY, 'k'],
+  KEYBOARD_MAESTRO: [APP_SWITCHING_KEY, 'm'],
   SLACK: [APP_SWITCHING_KEY, 's'],
   TERMINAL: [APP_SWITCHING_KEY, 't'],
   VSCODE: [APP_SWITCHING_KEY, 'v'],
@@ -77,7 +85,9 @@ export const appSwitchingShortcuts: Record<
 export type OtherStandardShortcuts =
   | 'SWITCH_TO_LAST_APPLICATION'
   | 'GQUEUES'
-  | 'GOOGLE_TAB_SEARCH';
+  | 'GOOGLE_TAB_SEARCH'
+  | 'SEARCH_IN_INTELLI_J'
+  | 'CHROME_NEW_TAB_WITH_SELECTED_URL';
 
 export const otherStandardShortcuts: Shortcuts<OtherStandardShortcuts> = {
   SWITCH_TO_LAST_APPLICATION: {
@@ -100,5 +110,27 @@ export const otherStandardShortcuts: Shortcuts<OtherStandardShortcuts> = {
         .toApp('Google Chrome')
         .toDelayedAction(toKey('a', ['left_shift', 'left_command']), []),
     options: { disableVimMode: true },
+  },
+  SEARCH_IN_INTELLI_J: {
+    from: `${APP_SWITCHING_KEY},p`,
+    to: (x) =>
+      x
+        .to(toKey('c', ['left_command']))
+        .to$(
+          "open -na 'IntelliJ IDEA.app' --args /Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-package-manager",
+        )
+        .toDelayedAction(toKey('f', ['left_command']), [])
+        .toDelayedAction(toKey('v', ['left_command']), [])
+        .parameters({ 'basic.to_delayed_action_delay_milliseconds': 500 }),
+  },
+  CHROME_NEW_TAB_WITH_SELECTED_URL: {
+    from: `${TAB_SWITCHING_KEY},x`,
+    to: (x) =>
+      x
+        .to(toKey('c', ['left_command']))
+        .toApp('Google Chrome')
+        .toDelayedAction(toKey('t', ['left_command']), [])
+        .toDelayedAction(toKey('v', ['left_command']), [])
+        .toDelayedAction(toKey('return_or_enter'), []),
   },
 };
