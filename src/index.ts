@@ -25,6 +25,7 @@ clickHelperWrapper.addRule(
   registerVimModeRules,
   registerVisualModeRules,
   registerModeSwitchingRules,
+  registerOtherCommandsRules,
   registerUnusedKeysInSpecialModeRules,
 ].forEach((registerRules) => registerRules(clickHelperWrapper));
 clickHelperWrapper.applyRules();
