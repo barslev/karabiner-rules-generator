@@ -6,8 +6,12 @@ import {
   TabSwitchingShortcutsKeys,
 } from '../../shortcuts/general/app-switching';
 import { ClickHelperWrapper } from '../../lib-extensions/click-helper-wrapper';
-import { ifVimModeEnabled } from '../rules-helpers';
-import { runKeyboardMaestro } from '../../lib-extensions/utils';
+import { ifVimModeEnabled, setModeToNoModeNoArgs } from '../rules-helpers';
+import {
+  runKeyboardMaestro,
+  wrapInDelayedActionAndSetNoModeInCancel,
+} from '../../lib-extensions/utils';
+import { to$ } from 'karabiner.ts';
 
 const Apps = {
   INTELLIJ: 'Visual Studio Code - Insiders.app',
@@ -103,10 +107,13 @@ export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
     clickHelperWrapper.registerTwoClickSequence(
       ...appSwitchingShortcuts[appSwitchingKey],
       (x) =>
-        x.to$(
-          `open -${config.args ? 'n' : ''}a '${config.app}' ${
-            !config.args ? '' : `--args ${config.args}`
-          }`,
+        wrapInDelayedActionAndSetNoModeInCancel(
+          x,
+          to$(
+            `open -${config.args ? 'n' : ''}a '${config.app}' ${
+              !config.args ? '' : `--args ${config.args}`
+            }`,
+          ),
         ),
     );
   }

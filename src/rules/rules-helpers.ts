@@ -38,6 +38,13 @@ export const ifVisualModeEnabled = ifVar(VIM_MODE_VARIABLE, VISUAL_MODE);
 
 export const ifNotNormalMode = ifVar(VIM_MODE_VARIABLE, NO_MODE).unless();
 
+export function setModeToNoModeNoArgs() {
+  return [
+    toSetVar(VIM_MODE_VARIABLE, NO_MODE),
+    toRemoveNotificationMessage(vimNotificationKey),
+  ];
+}
+
 export function setModeToNoMode(x: ReturnType<typeof map>) {
   return x
     .toVar(VIM_MODE_VARIABLE, NO_MODE)

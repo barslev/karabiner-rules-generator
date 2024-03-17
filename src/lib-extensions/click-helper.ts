@@ -1,4 +1,12 @@
-import { FromKeyCode, FromKeyParam, ifVar, map, toSetVar } from 'karabiner.ts';
+import {
+  FromKeyCode,
+  FromKeyParam,
+  ToKeyParam,
+  ifVar,
+  map,
+  toKey,
+  toSetVar,
+} from 'karabiner.ts';
 import {
   Options,
   ShortcutDescriptor,
@@ -7,8 +15,10 @@ import {
 import {
   getDisableUnusedKeysRule,
   setModeToNoMode,
+  setModeToNoModeNoArgs,
   setModeToVim,
 } from '../rules/rules-helpers';
+import { wrapInDelayedActionAndSetNoModeInCancel } from './utils';
 
 export type ManipulatorBuilder = ReturnType<typeof map>;
 
@@ -90,8 +100,10 @@ export class ClickHelper {
         const toHandler = (x: ManipulatorBuilder) => {
           let res;
           if (typeof to === 'function') res = to(x);
-          else if (Array.isArray(to)) res = x.to(...to);
-          else res = x.to(to);
+          else if (Array.isArray(to)) {
+            if (Array.isArray(from) || from === 'd,d') res = x.to(...to);
+            else res = wrapInDelayedActionAndSetNoModeInCancel(x, toKey(...to));
+          } else res = x.to(to);
           res = applyOptions(options, res);
           return res;
         };
