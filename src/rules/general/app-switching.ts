@@ -10,7 +10,7 @@ import { ifVimModeEnabled } from '../rules-helpers';
 import { runKeyboardMaestro } from '../../lib-extensions/utils';
 
 const Apps = {
-  INTELLIJ: 'IntelliJ IDEA.app',
+  INTELLIJ: 'Visual Studio Code - Insiders.app',
   CHROME: 'Google Chrome.app',
   ONENOTE: 'Microsoft OneNote.app',
   NOTION: 'Notion.app',
@@ -24,6 +24,8 @@ const Apps = {
   KARABINER_ELEMENTS: 'Karabiner-Elements.app',
   KARABINER_EVENT_VIEWER: 'Karabiner-EventViewer.app',
   TEX_SHOP: 'TeXShop.app',
+  TODOIST: 'Todoist.app',
+  WARP: 'Warp.app',
 };
 
 const configsForApps: Record<
@@ -34,12 +36,6 @@ const configsForApps: Record<
     app: Apps.INTELLIJ,
     args: [
       '/Users/benjaminbarslevnielsen/Documents/git/karabiner-rules-generator',
-    ],
-  },
-  INTELLIJ_KARABINER_COMPLEX_RULES: {
-    app: Apps.INTELLIJ,
-    args: [
-      '/Users/benjaminbarslevnielsen/Documents/git/karabiner-complex-rules',
     ],
   },
   INTELLIJ_COANA_PACKAGE_MANAGER_1: {
@@ -54,11 +50,9 @@ const configsForApps: Record<
       '/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-package-manager-2',
     ],
   },
-  INTELLIJ_COANA_PACKAGE_MANAGER_3: {
+  INTELLIJ_COANA_JAVA_SUPPORT: {
     app: Apps.INTELLIJ,
-    args: [
-      '/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-package-manager-3',
-    ],
+    args: ['/Users/benjaminbarslevnielsen/Documents/git/coana-java-support'],
   },
   INTELLIJ_HELM_CHARTS: {
     app: Apps.INTELLIJ,
@@ -70,6 +64,14 @@ const configsForApps: Record<
       '/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/jelly-coana-tech',
     ],
   },
+  VSCODE_TAI_E: {
+    app: Apps.INTELLIJ,
+    args: ['/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/tai-e'],
+  },
+  VSCODE_RESULTS: {
+    app: Apps.INTELLIJ,
+    args: ['/Users/benjaminbarslevnielsen/Documents/tmp/results'],
+  },
   CHROME: { app: Apps.CHROME },
   ONENOTE: { app: Apps.ONENOTE },
   NOTION: { app: Apps.NOTION },
@@ -78,11 +80,13 @@ const configsForApps: Record<
   KEYNOTE: { app: Apps.KEYNOTE },
   KEYBOARD_MAESTRO: { app: Apps.KEYBOARD_MAESTRO },
   SLACK: { app: Apps.SLACK },
-  TERMINAL: { app: Apps.TERMINAL },
+  //  TERMINAL: { app: Apps.TERMINAL },
   VSCODE: { app: Apps.VSCODE },
   KARABINER_ELEMENTS: { app: Apps.KARABINER_ELEMENTS },
   KARABINER_EVENT_VIEWER: { app: Apps.KARABINER_EVENT_VIEWER },
   TEX_SHOP: { app: Apps.TEX_SHOP },
+  TODOIST: { app: Apps.TODOIST },
+  WARP: { app: Apps.WARP },
 };
 export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
   clickHelperWrapper.startRule('App switching commands', [ifVimModeEnabled]);

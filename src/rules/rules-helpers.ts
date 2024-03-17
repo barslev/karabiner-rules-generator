@@ -5,6 +5,7 @@ import {
   map,
   rule,
   toNotificationMessage,
+  toRemoveNotificationMessage,
   toSetVar,
 } from 'karabiner.ts';
 
@@ -42,6 +43,7 @@ export function setModeToNoMode(x: ReturnType<typeof map>) {
     .toVar(VIM_MODE_VARIABLE, NO_MODE)
     .toRemoveNotificationMessage(vimNotificationKey);
 }
+
 export function setModeToVim(x: ReturnType<typeof map>) {
   return x
     .toVar(VIM_MODE_VARIABLE, VIM_MODE)
@@ -64,7 +66,7 @@ export function getDisableUnusedKeysRule(
   ruleSuffix: string,
 ) {
   return rule(`Disable unused keys in ${ruleSuffix}`, condition).manipulators([
-    ...modifierKeys.map((key) => map(key, undefined, 'any').to(key)),
+    ...modifierKeys.map((key) => map(key).to(key)), // was originally map(key, undefined, 'any') instead of just map(key), but that was causing issues when running in VSCode.
     map({ any: 'key_code', modifiers: { optional: ['any'] } }).to('vk_none'),
   ]);
 }

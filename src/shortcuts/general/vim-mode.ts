@@ -48,6 +48,13 @@ type VimModeShortcutsKeys =
   | 'ESCAPE'
   | 'RETURN_OR_ENTER'
   // OTHER
+  | 'KEYBOARD_MAESTRO_TASK'
+  | 'TAB'
+  | 'SHIFT_TAB'
+  | 'OPTION_SHIFT'
+  | 'OPTION_TAB'
+  | 'COMMAND_SPACE'
+  | 'OPTION_V'
   | 'QUIT';
 
 export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
@@ -56,28 +63,28 @@ export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
     to: (x) =>
       x
         .to('left_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']),
+        .to('delete_or_backspace'),
   },
   DELETE_WORD_END: {
     from: 'd+f',
     to: (x) =>
       x
         .to('right_arrow', ['left_shift', 'left_option'])
-        .to('x', ['left_command']),
+        .to('delete_or_backspace'),
   },
   DELETE_LINE_START: {
     from: 'd+a',
     to: (x) =>
       x
         .to('left_arrow', ['left_command', 'left_shift'])
-        .to('x', ['left_command']),
+        .to('delete_or_backspace'),
   },
   DELETE_LINE_END: {
     from: 'd+g',
     to: (x) =>
       x
         .to('right_arrow', ['left_command', 'left_shift'])
-        .to('x', ['left_command']),
+        .to('delete_or_backspace'),
   },
   DELETE_CHARACTER_FORWARD: {
     from: 'h',
@@ -273,5 +280,34 @@ export const vimModeShortcuts: Shortcuts<VimModeShortcutsKeys> = {
   QUIT: {
     from: 'q',
     to: ['q', 'left_command'],
+  },
+  KEYBOARD_MAESTRO_TASK: {
+    from: 't',
+    to: ['t', ['left_command', 'left_control', 'left_option']],
+    options: { disableVimMode: true, returnToVimOnEnter: true },
+  },
+  TAB: {
+    from: 'tab',
+    to: 'tab',
+  },
+  SHIFT_TAB: {
+    from: ['tab', 'left_shift'],
+    to: ['tab', 'left_shift'],
+  },
+  OPTION_SHIFT: {
+    from: ['left_shift', 'left_option'],
+    to: ['left_shift', 'left_option'],
+  },
+  OPTION_TAB: {
+    from: ['tab', 'left_option'],
+    to: ['tab', 'left_option'],
+  },
+  COMMAND_SPACE: {
+    from: ['spacebar', 'left_command'],
+    to: ['spacebar', 'left_command'],
+  },
+  OPTION_V: {
+    from: ['v', 'left_option'],
+    to: ['v', 'left_option'],
   },
 };

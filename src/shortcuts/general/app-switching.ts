@@ -1,17 +1,19 @@
-import { FromKeyParam, toKey, toTypeSequence } from 'karabiner.ts';
+import { FromKeyParam, to$, toKey, toTypeSequence } from 'karabiner.ts';
 import { Options, Shortcuts } from '../shortcut-helpers';
+import { runKeyboardMaestro } from '../../lib-extensions/utils';
 
 const APP_SWITCHING_KEY = 'd';
 const TAB_SWITCHING_KEY = 'c';
 
 export type AppSwitchingShortcutsKeys =
   | 'INTELLIJ_KARABINER_RULES_GENERATOR'
-  | 'INTELLIJ_KARABINER_COMPLEX_RULES'
   | 'INTELLIJ_COANA_PACKAGE_MANAGER_1'
   | 'INTELLIJ_COANA_PACKAGE_MANAGER_2'
-  | 'INTELLIJ_COANA_PACKAGE_MANAGER_3'
+  | 'INTELLIJ_COANA_JAVA_SUPPORT'
   | 'INTELLIJ_HELM_CHARTS'
   | 'INTELLIJ_JELLY'
+  | 'VSCODE_TAI_E'
+  | 'VSCODE_RESULTS'
   | 'CHROME'
   | 'ONENOTE'
   | 'NOTION'
@@ -20,11 +22,13 @@ export type AppSwitchingShortcutsKeys =
   | 'KEYNOTE'
   | 'KEYBOARD_MAESTRO'
   | 'SLACK'
-  | 'TERMINAL'
+  // | 'TERMINAL'
   | 'VSCODE'
   | 'KARABINER_ELEMENTS'
   | 'KARABINER_EVENT_VIEWER'
-  | 'TEX_SHOP';
+  | 'TEX_SHOP'
+  | 'TODOIST'
+  | 'WARP';
 
 // TODO: The following 4 is not implemented yet
 // addSecondClick2(APPLICATION_SWITCHER_KEY, 'f', { shell_command: "open /Users/benjaminbarslevnielsen/Documents/git/jsfixinc"}, vimModeOptions, undefined, getToKeyPress(['w', 'left_command'])),
@@ -36,12 +40,13 @@ export const appSwitchingShortcuts: Record<
   [FromKeyParam, FromKeyParam]
 > = {
   INTELLIJ_KARABINER_RULES_GENERATOR: [APP_SWITCHING_KEY, 'y'],
-  INTELLIJ_KARABINER_COMPLEX_RULES: [APP_SWITCHING_KEY, 'u'],
   INTELLIJ_COANA_PACKAGE_MANAGER_1: [APP_SWITCHING_KEY, 'i'],
   INTELLIJ_COANA_PACKAGE_MANAGER_2: [APP_SWITCHING_KEY, 'semicolon'],
-  INTELLIJ_COANA_PACKAGE_MANAGER_3: [APP_SWITCHING_KEY, 'quote'],
+  INTELLIJ_COANA_JAVA_SUPPORT: [APP_SWITCHING_KEY, 'quote'],
   INTELLIJ_HELM_CHARTS: [APP_SWITCHING_KEY, 'h'],
   INTELLIJ_JELLY: [APP_SWITCHING_KEY, 'j'],
+  VSCODE_RESULTS: [APP_SWITCHING_KEY, 'open_bracket'],
+  VSCODE_TAI_E: [APP_SWITCHING_KEY, 'close_bracket'],
   CHROME: [APP_SWITCHING_KEY, 'c'],
   ONENOTE: [APP_SWITCHING_KEY, 'o'],
   NOTION: [APP_SWITCHING_KEY, 'n'],
@@ -50,11 +55,13 @@ export const appSwitchingShortcuts: Record<
   KEYNOTE: [APP_SWITCHING_KEY, 'k'],
   KEYBOARD_MAESTRO: [APP_SWITCHING_KEY, 'm'],
   SLACK: [APP_SWITCHING_KEY, 's'],
-  TERMINAL: [APP_SWITCHING_KEY, 't'],
+  // TERMINAL: [APP_SWITCHING_KEY, 't'],
   VSCODE: [APP_SWITCHING_KEY, 'v'],
   KARABINER_ELEMENTS: [APP_SWITCHING_KEY, 'w'],
   KARABINER_EVENT_VIEWER: [APP_SWITCHING_KEY, 'e'],
   TEX_SHOP: [APP_SWITCHING_KEY, 'x'],
+  TODOIST: [APP_SWITCHING_KEY, 'u'],
+  WARP: [APP_SWITCHING_KEY, 't'],
 };
 
 export type TabSwitchingShortcutsKeys =
@@ -70,7 +77,9 @@ export type TabSwitchingShortcutsKeys =
   | 'CHROME_NAVIGATION'
   | 'CHROME_GQUEUES_INBOX'
   | 'CHROME_ARGO'
-  | 'CHROME_TRELLO';
+  | 'CHROME_TRELLO'
+  | 'CHROME_YOUTUBE'
+  | 'CHROME_DASHBOARD';
 
 export const tabSwitchingShortcuts: Record<
   TabSwitchingShortcutsKeys,
@@ -132,6 +141,14 @@ export const tabSwitchingShortcuts: Record<
     from: [TAB_SWITCHING_KEY, 'r'],
     url: 'https://trello.com/b/nR3yPO4q/tasks',
   },
+  CHROME_YOUTUBE: {
+    from: [TAB_SWITCHING_KEY, 'y'],
+    url: 'https://youtube.com',
+  },
+  CHROME_DASHBOARD: {
+    from: [TAB_SWITCHING_KEY, 'd'],
+    url: 'http://localhost:3000',
+  },
 };
 
 export type OtherStandardShortcuts =
@@ -139,7 +156,9 @@ export type OtherStandardShortcuts =
   | 'GQUEUES'
   | 'GOOGLE_TAB_SEARCH'
   | 'SEARCH_IN_INTELLI_J'
-  | 'CHROME_NEW_TAB_WITH_SELECTED_URL';
+  | 'CHROME_NEW_TAB_WITH_SELECTED_URL'
+  | 'CHROME_GITHUB_REPO_FROM_MAVEN_PACKAGE_IN_CLIPBOARD';
+// | 'SWITCH_TO_WARP_WORKFLOW_SEARCH';
 
 export const otherStandardShortcuts: Shortcuts<OtherStandardShortcuts> = {
   SWITCH_TO_LAST_APPLICATION: {
@@ -185,4 +204,18 @@ export const otherStandardShortcuts: Shortcuts<OtherStandardShortcuts> = {
         .toDelayedAction(toKey('v', ['left_command']), [])
         .toDelayedAction(toKey('return_or_enter'), []),
   },
+  CHROME_GITHUB_REPO_FROM_MAVEN_PACKAGE_IN_CLIPBOARD: {
+    from: `${TAB_SWITCHING_KEY},m`,
+    to: (x) =>
+      runKeyboardMaestro(x, 'Prepare writing vulnerability for selected URL'),
+    // runKeyboardMaestro(
+    //   x.to(toKey('c', ['left_command'])),
+    //   'Open github repo from maven package name',
+    // ),
+  },
+  // SWITCH_TO_WARP_WORKFLOW_SEARCH: {
+  //   from: `${APP_SWITCHING_KEY},t`,
+  //   to: (x) => runKeyboardMaestro(x, 'Open Warp and search coana workflow'),
+  //   options: { disableVimMode: true },
+  // }
 };

@@ -1,11 +1,11 @@
 import { Shortcuts } from '../shortcut-helpers';
 import { runKeyboardMaestro } from '../../lib-extensions/utils';
+import { validateHeaderValue } from 'http';
 
 export type OtherCommandsShortcutsKeys =
   | 'NPM_INSTALL_IN_TMP_WITH_PROMPT_FOR_PACKAGE_AND_VERSION'
-  | 'NOTIFY_IN_10_MINUTES'
-  | 'NOTIFY_IN_30_MINUTES'
-  | 'NOTIFY_IN_1_HOUR';
+  | 'TOGGLE_CONNECTION_TO_WIRELESS_HEADPHONES'
+  | 'RAYCAST';
 
 export const otherCommandsShortcuts: Shortcuts<OtherCommandsShortcutsKeys> = {
   NPM_INSTALL_IN_TMP_WITH_PROMPT_FOR_PACKAGE_AND_VERSION: {
@@ -17,19 +17,13 @@ export const otherCommandsShortcuts: Shortcuts<OtherCommandsShortcutsKeys> = {
       ),
     options: { disableVimMode: true, returnToVimOnEnter: true },
   },
-  NOTIFY_IN_10_MINUTES: {
-    from: '2',
-    to: (x) => runKeyboardMaestro(x, 'Notify in 10 minutes'),
-    options: { disableVimMode: true, returnToVimOnEnter: true },
+  TOGGLE_CONNECTION_TO_WIRELESS_HEADPHONES: {
+    from: 'f10',
+    to: (x) => runKeyboardMaestro(x, 'Connect wireless headphones'),
   },
-  NOTIFY_IN_30_MINUTES: {
-    from: '3',
-    to: (x) => runKeyboardMaestro(x, 'Notify in 30 minutes'),
-    options: { disableVimMode: true, returnToVimOnEnter: true },
-  },
-  NOTIFY_IN_1_HOUR: {
-    from: '4',
-    to: (x) => runKeyboardMaestro(x, 'Notify in 1 hour'),
-    options: { disableVimMode: true, returnToVimOnEnter: true },
+  RAYCAST: {
+    from: 'spacebar',
+    to: ['spacebar', 'left_option'],
+    options: { disableVimMode: true },
   },
 };
