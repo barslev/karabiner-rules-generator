@@ -101,7 +101,11 @@ export class ClickHelper {
           let res;
           if (typeof to === 'function') res = to(x);
           else if (Array.isArray(to)) {
-            if (Array.isArray(from) || from === 'd,d') res = x.to(...to);
+            if (
+              Array.isArray(from) ||
+              ['j', 'k', 'l', 'f', 's', 'semicolon', 'd,d'].includes(from)
+            )
+              res = x.to(...to);
             else
               res = /*x.to(...to);*/ wrapInDelayedActionAndSetNoModeInCancel(
                 x,
