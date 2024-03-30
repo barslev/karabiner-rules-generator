@@ -102,7 +102,11 @@ export class ClickHelper {
           if (typeof to === 'function') res = to(x);
           else if (Array.isArray(to)) {
             if (Array.isArray(from) || from === 'd,d') res = x.to(...to);
-            else res = wrapInDelayedActionAndSetNoModeInCancel(x, toKey(...to));
+            else
+              res = /*x.to(...to);*/ wrapInDelayedActionAndSetNoModeInCancel(
+                x,
+                toKey(...to),
+              );
           } else res = x.to(to);
           res = applyOptions(options, res);
           return res;

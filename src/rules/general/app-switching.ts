@@ -54,9 +54,9 @@ const configsForApps: Record<
       '/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-package-manager-2',
     ],
   },
-  INTELLIJ_COANA_JAVA_SUPPORT: {
+  INTELLIJ_COANA_ACTION: {
     app: Apps.INTELLIJ,
-    args: ['/Users/benjaminbarslevnielsen/Documents/git/coana-java-support'],
+    args: ['/Users/benjaminbarslevnielsen/Documents/git/jsfixinc/coana-action'],
   },
   INTELLIJ_HELM_CHARTS: {
     app: Apps.INTELLIJ,
@@ -107,6 +107,13 @@ export function registerRules(clickHelperWrapper: ClickHelperWrapper) {
     clickHelperWrapper.registerTwoClickSequence(
       ...appSwitchingShortcuts[appSwitchingKey],
       (x) =>
+        // appSwitchingKey.includes('INTELLIJ')
+        // x.to$(
+        //   `open -${config.args ? 'n' : ''}a '${config.app}' ${
+        //     !config.args ? '' : `--args ${config.args}`
+        //   }`,
+        // ),
+        // :
         wrapInDelayedActionAndSetNoModeInCancel(
           x,
           to$(
